@@ -1,47 +1,37 @@
-import React, { useState } from 'react'
-import { Modal, Button, Form } from 'react-bootstrap';
+import React, { useState, useContext } from 'react'
+import NotesContext from "../../Context/NotesContext";
+import { Modal, Button } from 'react-bootstrap';
+
 export default function Delete() {
+
+  const { selectedNote, deleteNote } = useContext( NotesContext );
 
   const [ show, setShow ] = useState( false );
 
   const handleClose = () => setShow( false );
   const handleShow = () => setShow( true );
 
+  const handleDelete = () => {
+    deleteNote( selectedNote._id )
+    handleClose()
+  };
+
+
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button>
+      <button onClick={handleShow} type="button" className="btn btn-danger btn-lg container-fluid  m-1">Delete Note</button>
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
-          <Modal.Title>DELETE NOTE</Modal.Title>
+          <Modal.Title>Delete Note</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="name@example.com"
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Label>Example textarea</Form.Label>
-              <Form.Control as="textarea" rows={3} />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
+        <Modal.Body>⚠️ Are you sure you want to delete this note? </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
+          <Button variant="danger" onClick={handleDelete}>
+            Delete
           </Button>
         </Modal.Footer>
       </Modal>

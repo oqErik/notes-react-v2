@@ -2,8 +2,8 @@ import React, { useState, useContext } from 'react'
 import NotesContext from "../../Context/NotesContext";
 import { Modal, Button, Form } from 'react-bootstrap';
 
-export default function New() {
-  const { saveNewNote } = useContext( NotesContext );
+export default function Edit() {
+  const { updateNote, selectedNote } = useContext( NotesContext );
   const [ show, setShow ] = useState( false );
   const [ inputs, setInputs ] = useState( {} );
 
@@ -14,25 +14,28 @@ export default function New() {
   }
 
   const handleClose = () => setShow( false );
-  const handleShow = () => setShow( true );
+
+  const handleShow = () => {
+    setInputs( selectedNote )
+    setShow( true )
+  };
 
   const handleSave = () => {
-    saveNewNote( inputs )
+    updateNote( inputs )
     handleClose()
   };
 
-
   return (
     <>
-      <button onClick={handleShow} type="button" className="container-fluid btn btn-success btn-lg m-1">New Note</button>
+      <button onClick={handleShow} type="button" className="container-fluid btn btn-secondary btn-lg m-1">Edit</button>
 
       <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton >
-          <Modal.Title>Create Note</Modal.Title>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Note</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group className="mb-3" controlId="new-note-title">
+            <Form.Group className="mb-3" controlId="edit-note-title">
               <Form.Label>Title</Form.Label>
               <Form.Control
                 name="title"
@@ -40,11 +43,12 @@ export default function New() {
                 placeholder="Title"
                 autoFocus
                 onChange={handleChange}
+                value={inputs.title}
               />
             </Form.Group>
             <Form.Group
               className="mb-3"
-              controlId="new-note-description"
+              controlId="edit-note-description"
             >
               <Form.Label>Note</Form.Label>
               <Form.Control
@@ -53,6 +57,7 @@ export default function New() {
                 rows={4}
                 placeholder="Description"
                 onChange={handleChange}
+                value={inputs.description}
               />
             </Form.Group>
           </Form>
@@ -62,7 +67,7 @@ export default function New() {
             Close
           </Button>
           <Button variant="primary" onClick={handleSave}>
-            Save New Note
+            Save Changes
           </Button>
         </Modal.Footer>
       </Modal>

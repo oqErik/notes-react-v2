@@ -1,19 +1,24 @@
 import React, { useContext } from 'react'
 import NotesContext from '../../Context/NotesContext'
+import New from './New'
+import Delete from './Delete'
+import Edit from './Edit'
 
 export default function Buttons() {
-  const notesContext = useContext( NotesContext )
-
-  const editNote = () => notesContext.changeEdited( true );
-  const newNote = () => notesContext.changeEdited( true );
-
-
+  const { selectedNote } = useContext( NotesContext )
 
   return (
     <>
-      <button type="button" className="container-fluid btn btn-success btn-lg m-1">New Note</button>
-      <button type="button" className="btn btn-secondary btn-lg container-fluid  m-1" onClick={() => editNote()}>Edit Note</button>
-      <button type="button" className="btn btn-danger btn-lg container-fluid  m-1">Delete Note</button>
+      <New />
+      {selectedNote && <Edit />}
+
+      {selectedNote && <Delete />}
+
+
+      {/* <button type="button" className="btn btn-secondary btn-lg container-fluid  m-1" onClick={() => editNote()}>Edit Note</button> */}
+
+
+
     </>
   )
 }

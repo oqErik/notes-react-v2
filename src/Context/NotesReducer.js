@@ -1,7 +1,6 @@
 const types = {
   GET_NOTES: "GET_NOTES",
-  GET_NOTE: "GET_NOTE",
-  EDITED: "EDITED"
+  SELECT_NOTE: "SELECT_NOTE",
 }
 
 // eslint-disable-next-line
@@ -16,17 +15,11 @@ export default ( state, action ) => {
         ...state,
         notes: payload,
       };
-    case types.GET_NOTE:
+    case types.SELECT_NOTE:
       return {
         ...state,
         selectedNote: payload,
       };
-    case types.EDITED:
-      return {
-        ...state,
-        edited: payload,
-      };
-
     default:
       return state;
   }
