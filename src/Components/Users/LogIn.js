@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import UserContext from "../../Context/User/UserContext";
 
 
@@ -30,11 +30,9 @@ export default function LogIn() {
 
   return (
     <>
-      <a href='#!' className='nav-link text-white p-2' onClick={( event ) => {
+      <Link className='nav-link text-white' to='#!' onClick={( event ) => {
         handleShow( event )
-      }}>
-        LogIn
-      </a>
+      }}>LogIn</Link>
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>

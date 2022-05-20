@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom/client';
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 import Notes from "./Components/Notes/Notes";
-import './index.css';
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import NotesState from './Context/NotesState'
 import UserState from './Context/User/UserState'
-
 import Users from './Components/Users/Users';
+import AdminNotes from './Components/Admin/AdminNotes';
+import AdminUsers from './Components/Admin/AdminUsers';
 
 const root = ReactDOM.createRoot( document.getElementById( 'root' ) );
 root.render(
@@ -21,6 +22,8 @@ root.render(
             <Route path="/" element={<App />}>
               <Route path="notes" element={<Notes />} />
               <Route path="login" element={<Users />} />
+              <Route path="admin/users" element={<AdminUsers />} />
+              <Route path="admin/notes" element={<AdminNotes />} />
             </Route >
           </Routes>
         </UserState>

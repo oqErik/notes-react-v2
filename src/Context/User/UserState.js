@@ -5,12 +5,13 @@ import UserReducer from "./UserReducer";
 import UserContext from "./UserContext";
 
 const types = {
-  LOGIN: "LOGIN"
+  LOGIN: "LOGIN",
+  LOGOUT: "LOGOUT"
 }
 
 const UserState = ( props ) => {
   const initialState = {
-    user: {},
+    user: null,
     isAdmin: false,
   };
 
@@ -26,14 +27,19 @@ const UserState = ( props ) => {
     }
   };
 
+  const logout = () => {
+    //localStorage.removeItem( 'token' )
+    dispatch( { type: types.LOGOUT, payload: null } );
 
+  }
 
   return (
     <UserContext.Provider
       value={{
         user: state.user,
         isAdmin: state.isAdmin,
-        login
+        login,
+        logout
       }}
     >
       {props.children}
