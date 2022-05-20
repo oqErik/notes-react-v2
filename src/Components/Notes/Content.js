@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import NotesContext from "../../Context/NotesContext";
+import NotesContext from "../../Context/Notes/NotesContext";
 
 
 export default function Content() {

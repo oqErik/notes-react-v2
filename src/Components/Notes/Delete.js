@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import NotesContext from "../../Context/NotesContext";
+import NotesContext from "../../Context/Notes/NotesContext";
 import { Modal, Button } from 'react-bootstrap';
 
 export default function Delete() {

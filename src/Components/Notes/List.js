@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import NotesContext from '../../Context/NotesContext'
+import NotesContext from '../../Context/Notes//NotesContext'
 
 export default function List() {
   const { notes, selectNote, getNotes } = useContext( NotesContext );

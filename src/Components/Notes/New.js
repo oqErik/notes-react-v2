@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import NotesContext from "../../Context/NotesContext";
+import NotesContext from "../../Context/Notes/NotesContext";
 import { Modal, Button, Form } from 'react-bootstrap';
 
 export default function New() {

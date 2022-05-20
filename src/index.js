@@ -6,7 +6,7 @@ import Notes from "./Components/Notes/Notes";
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import NotesState from './Context/NotesState'
+import NotesState from './Context/Notes/NotesState'
 import UserState from './Context/User/UserState'
 import Users from './Components/Users/Users';
 import AdminNotes from './Components/Admin/AdminNotes';
