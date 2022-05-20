@@ -7,22 +7,26 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import NotesState from './Context/NotesState'
+import UserState from './Context/User/UserState'
+
 import Users from './Components/Users/Users';
+
 const root = ReactDOM.createRoot( document.getElementById( 'root' ) );
 root.render(
   <BrowserRouter>
     <React.StrictMode>
       <NotesState>
-        <Routes>
-          <Route path="/" element={<App />}>
-            <Route path="notes" element={<Notes />} />
-            <Route path="login" element={<Users />} />
-          </Route >
-        </Routes>
+        <UserState>
+          <Routes>
+            <Route path="/" element={<App />}>
+              <Route path="notes" element={<Notes />} />
+              <Route path="login" element={<Users />} />
+            </Route >
+          </Routes>
+        </UserState>
       </NotesState>
     </React.StrictMode>
   </BrowserRouter >
-
 );
 
 // If you want to start measuring performance in your app, pass a function

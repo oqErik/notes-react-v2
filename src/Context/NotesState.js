@@ -8,7 +8,7 @@ const types = {
   GET_NOTES: "GET_NOTES",
   SELECT_NOTE: "SELECT_NOTE",
 }
-
+const token = { 'token': localStorage.getItem( 'token' ) }
 const NotesState = ( props ) => {
   const initialState = {
     notes: [],
@@ -19,9 +19,7 @@ const NotesState = ( props ) => {
 
   const getNotes = async () => {
     try {
-      const res = await axios.get( 'https://notes-rest-api-v1.herokuapp.com/api/notes', {
-        headers: { 'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjdkZTM5ZDE2YmNkYTQwMzQ1NzdhMTkiLCJpYXQiOjE2NTI5OTY4MTAsImV4cCI6MTY1MzAxMTIxMH0.Ixt_w1weVs465Pv-g_HzPA98qy6JZ4CKgl9dzlMm9NY' }
-      } )
+      const res = await axios.get( 'https://notes-rest-api-v1.herokuapp.com/api/notes', { headers: token } )
       dispatch( { type: types.GET_NOTES, payload: res.data } );
     } catch ( error ) {
       console.error( error );
@@ -39,9 +37,10 @@ const NotesState = ( props ) => {
 
   const saveNewNote = async ( newNote ) => {
     try {
-      await axios.post( `https://notes-rest-api-v1.herokuapp.com/api/notes`, newNote, {
-        headers: { 'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjdkZTM5ZDE2YmNkYTQwMzQ1NzdhMTkiLCJpYXQiOjE2NTI5OTY4MTAsImV4cCI6MTY1MzAxMTIxMH0.Ixt_w1weVs465Pv-g_HzPA98qy6JZ4CKgl9dzlMm9NY' }
-      } )
+      await axios.post( `https://notes-rest-api-v1.herokuapp.com/api/notes`,
+        newNote,
+        { headers: token }
+      )
       getNotes()
     } catch ( error ) {
       console.error( error );
@@ -50,9 +49,7 @@ const NotesState = ( props ) => {
 
   const deleteNote = async ( id ) => {
     try {
-      await axios.delete( `https://notes-rest-api-v1.herokuapp.com/api/notes/${id}`, {
-        headers: { 'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjdkZTM5ZDE2YmNkYTQwMzQ1NzdhMTkiLCJpYXQiOjE2NTI5OTY4MTAsImV4cCI6MTY1MzAxMTIxMH0.Ixt_w1weVs465Pv-g_HzPA98qy6JZ4CKgl9dzlMm9NY' }
-      } )
+      await axios.delete( `https://notes-rest-api-v1.herokuapp.com/api/notes/${id}`, { headers: token } )
       getNotes()
       selectNote( null )
     } catch ( error ) {
@@ -62,9 +59,10 @@ const NotesState = ( props ) => {
 
   const updateNote = async ( { _id, title, description } ) => {
     try {
-      await axios.put( `https://notes-rest-api-v1.herokuapp.com/api/notes/${_id}`, { title, description }, {
-        headers: { 'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjdkZTM5ZDE2YmNkYTQwMzQ1NzdhMTkiLCJpYXQiOjE2NTI5OTY4MTAsImV4cCI6MTY1MzAxMTIxMH0.Ixt_w1weVs465Pv-g_HzPA98qy6JZ4CKgl9dzlMm9NY' }
-      } )
+      await axios.put( `https://notes-rest-api-v1.herokuapp.com/api/notes/${_id}`,
+        { title, description },
+        { headers: token }
+      )
       getNotes()
       selectNote( null ) //refreseshes the content component
     } catch ( error ) {

@@ -7,7 +7,7 @@ function App() {
 
     <div>
       <Navbar />
-      <div>alskdjas</div>
+
       <Outlet />
     </div>
 
