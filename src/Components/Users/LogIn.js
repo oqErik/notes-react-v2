@@ -1,10 +1,12 @@
 import React, { useState, useContext } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import UserContext from "../../Context/User/UserContext";
 
 
 export default function LogIn() {
   const { login } = useContext( UserContext );
+  const navigate = useNavigate();
   const [ show, setShow ] = useState( false );
   const [ inputs, setInputs ] = useState( {} );
 
@@ -18,12 +20,12 @@ export default function LogIn() {
   const handleShow = ( event ) => {
     event.preventDefault()
     setShow( true )
-
   };
 
   const logIn = () => {
     login( inputs )
     handleClose()
+    navigate( "/notes" )
   }
 
   return (
