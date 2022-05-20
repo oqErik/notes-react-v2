@@ -9,6 +9,7 @@ const types = {
   SELECT_NOTE: "SELECT_NOTE",
 }
 const token = { 'token': localStorage.getItem( 'token' ) }
+
 const NotesState = ( props ) => {
   const initialState = {
     notes: [],
