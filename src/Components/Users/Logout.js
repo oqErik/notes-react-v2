@@ -1,11 +1,14 @@
 import React, { useState, useContext } from 'react'
-import UserContext from "../../Context/User/UserContext";
+
 import { Modal, Button } from 'react-bootstrap';
 import { useNavigate, Link } from "react-router-dom";
+import { PersonSquare } from 'react-bootstrap-icons';
+import UserContext from "../../Context/User/UserContext";
 
-export default function Delete() {
-  const { logout } = useContext( UserContext );
+
+export default function Logout() {
   const navigate = useNavigate();
+  const { logout } = useContext( UserContext );
   const [ show, setShow ] = useState( false );
 
   const handleClose = () => setShow( false );
@@ -17,7 +20,7 @@ export default function Delete() {
   const handleLogut = () => {
     logout()
     handleClose()
-    navigate( "/" )
+    //navigate( "/" )
   };
 
 
@@ -25,7 +28,7 @@ export default function Delete() {
     <>
       <Link className='nav-link' to='#!' onClick={( event ) => {
         handleShow( event )
-      }}>Logout</Link>
+      }}><PersonSquare size="1.2rem" /> Logout</Link>
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>

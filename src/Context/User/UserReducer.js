@@ -1,7 +1,6 @@
 const types = {
   LOGIN: "LOGIN",
   LOGOUT: "LOGOUT",
-
 }
 
 // eslint-disable-next-line
@@ -13,12 +12,14 @@ export default ( state, action ) => {
     case types.LOGIN:
       return {
         ...state,
-        user: payload,
+        token: payload.token,
+        isAdmin: payload.isAdmin,
       };
     case types.LOGOUT:
       return {
         ...state,
-        user: payload,
+        token: payload,
+        isAdmin: payload,
       };
 
     default:

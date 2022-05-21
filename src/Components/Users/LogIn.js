@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import UserContext from "../../Context/User/UserContext";
-
+import { PersonSquare } from 'react-bootstrap-icons';
 
 export default function LogIn() {
   const { login } = useContext( UserContext );
@@ -25,14 +25,14 @@ export default function LogIn() {
   const logIn = () => {
     login( inputs )
     handleClose()
-    navigate( "/notes" )
+    //navigate( "/notes" )
   }
 
   return (
     <>
       <Link className='nav-link text-white' to='#!' onClick={( event ) => {
         handleShow( event )
-      }}>LogIn</Link>
+      }}><PersonSquare size="1.2rem" /> LogIn</Link>
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>

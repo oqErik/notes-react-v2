@@ -1,5 +1,6 @@
 import React from 'react'
 import { Form, FormControl, Button } from 'react-bootstrap';
+import AllNotes from './AllNotes';
 
 export default function AdminNotes() {
 
@@ -16,34 +17,21 @@ export default function AdminNotes() {
     <Button variant="outline-success">Search</Button>
   </Form> )
 
-  const allNotes = ( <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-    <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">TITLE</h5>
-      <small>DATE</small>
-    </div>
-    <p class="mb-1">NOTE</p>
-    <small>USER</small>
-  </a> )
+
 
   return (
     <div className="container p-4">
       <div className="row">
         <div className="col-md-12">
-          <h1 style={{ "text-align": "center" }}>ADMIN NOTES</h1>
+          <h1 style={{ "textAlign": "center" }}>ADMIN NOTES</h1>
 
           {searchBar}
 
 
-          <div class="list-group">
+          <div className="list-group">
+            <AllNotes />
 
-            {allNotes}
-            {allNotes}
-            {allNotes}
-            {allNotes}
-            {allNotes}
-            {allNotes}
-            {allNotes}
-            {allNotes}
+
           </div>
 
         </div>

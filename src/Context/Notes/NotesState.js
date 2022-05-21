@@ -7,6 +7,8 @@ import NotesContext from "./NotesContext";
 const types = {
   GET_NOTES: "GET_NOTES",
   SELECT_NOTE: "SELECT_NOTE",
+  GET_NOTES_ADMIN: "GET_NOTES_ADMIN",
+
 }
 const token = { 'token': localStorage.getItem( 'token' ) }
 
@@ -14,6 +16,7 @@ const NotesState = ( props ) => {
   const initialState = {
     notes: [],
     selectedNote: null,
+    allNotes: []
   };
 
   const [ state, dispatch ] = useReducer( NotesReducer, initialState );
@@ -72,6 +75,17 @@ const NotesState = ( props ) => {
   }
 
 
+  const getAllNotesAdmin = async () => {
+    try {
+      const res = await axios.get( `https://notes-rest-api-v1.herokuapp.com/api/notes/`,
+        { headers: token }
+      )
+      dispatch( { type: types.GET_NOTES_ADMIN, payload: res.data } );
+    } catch ( error ) {
+      console.error( error );
+    }
+  }
+
   return (
     <NotesContext.Provider
       value={{
@@ -81,7 +95,8 @@ const NotesState = ( props ) => {
         selectNote,
         saveNewNote,
         deleteNote,
-        updateNote
+        updateNote,
+        getAllNotesAdmin
       }}
     >
       {props.children}
