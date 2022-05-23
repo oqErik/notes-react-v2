@@ -12,7 +12,7 @@ import AdminNotes from './Components/Admin/AdminNotes';
 import AdminUsers from './Components/Admin/AdminUsers';
 import Home from './Components/Home/Home';
 import NoRoute from './Components/NoRoute';
-
+import './index.css'
 const root = ReactDOM.createRoot( document.getElementById( 'root' ) );
 root.render(
   <BrowserRouter>

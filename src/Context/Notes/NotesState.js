@@ -8,7 +8,8 @@ const types = {
   GET_NOTES: "GET_NOTES",
   SELECT_NOTE: "SELECT_NOTE",
   GET_NOTES_ADMIN: "GET_NOTES_ADMIN",
-
+  LOADING: "LOADING",
+  CLEAR_NOTES: "CLEAR_NOTES"
 }
 const token = { 'token': localStorage.getItem( 'token' ) }
 
@@ -16,16 +17,26 @@ const NotesState = ( props ) => {
   const initialState = {
     notes: [],
     selectedNote: null,
-    allNotes: []
+    allNotes: [],
+    loading: true
   };
 
   const [ state, dispatch ] = useReducer( NotesReducer, initialState );
 
+  const clearNotes = () => {
+    dispatch( { type: types.CLEAR_NOTES, payload: null } );
+  }
+
   const getNotes = async () => {
     try {
+      dispatch( { type: types.LOADING, payload: true } );
       const res = await axios.get( 'https://notes-rest-api-v1.herokuapp.com/api/notes', { headers: token } )
       dispatch( { type: types.GET_NOTES, payload: res.data } );
+      dispatch( { type: types.LOADING, payload: false } );
+
     } catch ( error ) {
+      dispatch( { type: types.LOADING, payload: false } );
+
       console.error( error );
     }
   };
@@ -77,11 +88,28 @@ const NotesState = ( props ) => {
 
   const getAllNotesAdmin = async () => {
     try {
-      const res = await axios.get( `https://notes-rest-api-v1.herokuapp.com/api/notes/`,
+      dispatch( { type: types.LOADING, payload: true } );
+      const res = await axios.get( `https://notes-rest-api-v1.herokuapp.com/api/search/notes`,
         { headers: token }
       )
       dispatch( { type: types.GET_NOTES_ADMIN, payload: res.data } );
+      dispatch( { type: types.LOADING, payload: false } );
     } catch ( error ) {
+      dispatch( { type: types.LOADING, payload: false } );
+      console.error( error );
+    }
+  }
+
+  const searchNotesAdmin = async ( params ) => {
+    try {
+      dispatch( { type: types.LOADING, payload: true } );
+      const res = await axios.get( `https://notes-rest-api-v1.herokuapp.com/api/search/notes/${params}`,
+        { headers: token }
+      )
+      dispatch( { type: types.GET_NOTES_ADMIN, payload: res.data } );
+      dispatch( { type: types.LOADING, payload: false } );
+    } catch ( error ) {
+      dispatch( { type: types.LOADING, payload: false } );
       console.error( error );
     }
   }
@@ -91,12 +119,16 @@ const NotesState = ( props ) => {
       value={{
         notes: state.notes,
         selectedNote: state.selectedNote,
+        allNotes: state.allNotes,
+        loading: state.loading,
         getNotes,
         selectNote,
         saveNewNote,
         deleteNote,
         updateNote,
-        getAllNotesAdmin
+        getAllNotesAdmin,
+        searchNotesAdmin,
+        clearNotes
       }}
     >
       {props.children}

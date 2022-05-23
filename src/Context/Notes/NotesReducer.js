@@ -2,6 +2,9 @@ const types = {
   GET_NOTES: "GET_NOTES",
   SELECT_NOTE: "SELECT_NOTE",
   GET_NOTES_ADMIN: "GET_NOTES_ADMIN",
+  LOADING: "LOADING",
+  CLEAR_NOTES: "CLEAR_NOTES"
+
 }
 
 // eslint-disable-next-line
@@ -26,6 +29,19 @@ export default ( state, action ) => {
         ...state,
         allNotes: payload,
       };
+    case types.LOADING:
+      return {
+        ...state,
+        loading: payload,
+      };
+    case types.CLEAR_NOTES:
+      return {
+        notes: [],
+        selectedNote: null,
+        allNotes: [],
+        loading: true
+      };
+
     default:
       return state;
   }

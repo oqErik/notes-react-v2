@@ -26,14 +26,14 @@ export default function Navbar() {
     <NavbarBoostrap variant="dark" bg="dark" expand="lg">
       <Container fluid>
         <NavbarBoostrap.Brand><Link className="nav-link" to="/">Notes React App</Link> </NavbarBoostrap.Brand>
-        {/* <NavbarBoostrap.Toggle /> */}
-        {/*  <NavbarBoostrap.Collapse id="main-navbar"> */}
-        <Nav className="justify-content-end flex-grow-1 pe-3">
-          {isAdmin && adminSection}
-          {token ? <Link to="/notes" className="nav-link text-white"><CardHeading /> My Notes</Link> : null}
-          {!token ? <LogIn /> : <Logout />}
-        </Nav>
-        {/*   </NavbarBoostrap.Collapse> */}
+        <NavbarBoostrap.Toggle />
+        <NavbarBoostrap.Collapse id="main-navbar">
+          <Nav className="justify-content-end flex-grow-1 pe-3">
+            {isAdmin && adminSection}
+            {token ? <Link to="/notes" className="nav-link text-white"><CardHeading /> My Notes</Link> : null}
+            {!token ? <LogIn /> : <Logout />}
+          </Nav>
+        </NavbarBoostrap.Collapse>
       </Container>
     </NavbarBoostrap >
   )

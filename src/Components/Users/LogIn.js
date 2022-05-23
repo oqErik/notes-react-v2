@@ -28,6 +28,13 @@ export default function LogIn() {
     //navigate( "/notes" )
   }
 
+  const handleKeypress = e => {
+    //it triggers by pressing the enter key
+    if ( e.key === 'Enter' ) {
+      e.preventDefault()
+      logIn()
+    }
+  };
   return (
     <>
       <Link className='nav-link text-white' to='#!' onClick={( event ) => {
@@ -48,6 +55,7 @@ export default function LogIn() {
                 name='email'
                 value={inputs.email || ''}
                 onChange={handleChange}
+                onKeyPress={( e ) => handleKeypress( e )}
                 autoFocus
               />
             </Form.Group>
@@ -58,6 +66,7 @@ export default function LogIn() {
                 name='password'
                 value={inputs.password || ''}
                 onChange={handleChange}
+                onKeyPress={( e ) => handleKeypress( e )}
               />
             </Form.Group>
           </Form>

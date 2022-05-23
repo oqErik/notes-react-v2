@@ -4,11 +4,13 @@ import { Modal, Button } from 'react-bootstrap';
 import { useNavigate, Link } from "react-router-dom";
 import { PersonSquare } from 'react-bootstrap-icons';
 import UserContext from "../../Context/User/UserContext";
+import NotesContext from "../../Context/Notes/NotesContext";
 
 
 export default function Logout() {
   const navigate = useNavigate();
   const { logout } = useContext( UserContext );
+  const { clearNotes } = useContext( NotesContext );
   const [ show, setShow ] = useState( false );
 
   const handleClose = () => setShow( false );
@@ -19,8 +21,9 @@ export default function Logout() {
 
   const handleLogut = () => {
     logout()
+    clearNotes()
     handleClose()
-    //navigate( "/" )
+    navigate( "/" )
   };
 
 

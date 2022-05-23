@@ -11,15 +11,13 @@ export default ( state, action ) => {
   switch ( type ) {
     case types.LOGIN:
       return {
-        ...state,
         token: payload.token,
         isAdmin: payload.isAdmin,
       };
     case types.LOGOUT:
       return {
-        ...state,
-        token: payload,
-        isAdmin: payload,
+        token: null,
+        isAdmin: null,
       };
 
     default:

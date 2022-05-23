@@ -1,48 +1,51 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Form, FormControl, Button } from 'react-bootstrap';
-import NotesContext from "../../Context/Notes/NotesContext";
-import axios from 'axios'
-export default function AllNotes() {
+import React from 'react'
+import { Accordion, Button, Spinner } from 'react-bootstrap';
 
+export default function AllNotes( { allNotes, loading } ) {
+  const spinner =
+    <Button variant="primary" disabled>
+      <Spinner
+        as="span"
+        animation="border"
+        size="xl"
+        role="status"
+        aria-hidden="true"
+      />
+      Loading...
+    </Button>
 
-
-  const [ notes, setNotes ] = useState( [] )
-  const getNotes = async () => {
-    try {
-      const res = await axios.get( `https://notes-rest-api-v1.herokuapp.com/api/notes/`,
-        { headers: { token: localStorage.getItem( 'token' ) } }
-      )
-      setNotes( res.data )
-      console.log( res.data );
-    } catch ( error ) {
-      console.error( error );
-    }
-  }
-
-  useEffect( () => {
-    getNotes()
-  }, [] )
-
+  const notesList = <><h4>Total: {allNotes.total}</h4>
+    <Accordion>
+      {allNotes.notes?.length ?
+        allNotes.notes.map( ( item, pos ) => {
+          return (
+            <Accordion.Item eventKey={pos} key={item._id}>
+              <Accordion.Header >
+                <div className="flex-column align-items-start rounded-3 text-truncate" >
+                  <div className="d-flex w-100 justify-content-between">
+                    <h5 className="mb-1">{item.title}</h5>
+                    <strong> <small>Created: {item.createdAt.split( 'T' )[ 0 ]}</small></strong>
+                  </div>
+                  <p className="mb-1 ">{item.description}</p>
+                  <small>{item.user.name}  -  {item.user.email}</small>
+                </div>
+              </Accordion.Header>
+              <Accordion.Body >
+                {item.description}
+                <span className="d-flex w-100 justify-content-center ">
+                  <Button className="w-100 m-1 btn-dark">Edit</Button>
+                  <Button className="w-100 m-1 btn-danger">Delete</Button>
+                </span>
+              </Accordion.Body>
+            </Accordion.Item>
+          )
+        }
+        ) : <div>No notes</div>}
+    </Accordion></>
 
   return (
-
-
-    notes.map( ( item ) => {
-      return (
-        <a href="#!" className="list-group-item list-group-item-action flex-column align-items-start">
-          <div className="d-flex w-100 justify-content-between">
-            <h5 className="mb-1">{item.title}</h5>
-            <small>{item.date}</small>
-          </div>
-          <p className="mb-1">{item.description}</p>
-          <small>sas</small>
-        </a> )
-    }
-
-
-
-
-
-    )
+    <>
+      {loading ? spinner : notesList}
+    </>
   )
 }
