@@ -9,7 +9,8 @@ const types = {
   SELECT_NOTE: "SELECT_NOTE",
   GET_NOTES_ADMIN: "GET_NOTES_ADMIN",
   LOADING: "LOADING",
-  CLEAR_NOTES: "CLEAR_NOTES"
+  CLEAR_NOTES: "CLEAR_NOTES",
+  ERRORS: "ERROS"
 }
 const token = { 'token': localStorage.getItem( 'token' ) }
 
@@ -18,7 +19,8 @@ const NotesState = ( props ) => {
     notes: [],
     selectedNote: null,
     allNotes: [],
-    loading: true
+    loading: true,
+    errors: []
   };
 
   const [ state, dispatch ] = useReducer( NotesReducer, initialState );
@@ -33,9 +35,9 @@ const NotesState = ( props ) => {
       const res = await axios.get( 'https://notes-rest-api-v1.herokuapp.com/api/notes', { headers: token } )
       dispatch( { type: types.GET_NOTES, payload: res.data } );
       dispatch( { type: types.LOADING, payload: false } );
-
     } catch ( error ) {
       dispatch( { type: types.LOADING, payload: false } );
+      dispatch( { type: types.ERROR, payload: error.response.data.errors } );
 
       console.error( error );
     }
@@ -46,6 +48,8 @@ const NotesState = ( props ) => {
     try {
       dispatch( { type: types.SELECT_NOTE, payload: note } );
     } catch ( error ) {
+      dispatch( { type: types.ERROR, payload: error.response.data.errors } );
+
       console.error( error );
     }
   };
@@ -58,6 +62,8 @@ const NotesState = ( props ) => {
       )
       getNotes()
     } catch ( error ) {
+      dispatch( { type: types.ERROR, payload: error.response.data.errors } );
+
       console.error( error );
     }
   }
@@ -68,6 +74,8 @@ const NotesState = ( props ) => {
       getNotes()
       selectNote( null )
     } catch ( error ) {
+      dispatch( { type: types.ERROR, payload: error.response.data.errors } );
+
       console.error( error );
     }
   }
@@ -81,6 +89,8 @@ const NotesState = ( props ) => {
       getNotes()
       selectNote( null ) //refreseshes the content component
     } catch ( error ) {
+      dispatch( { type: types.ERROR, payload: error.response.data.errors } );
+
       console.error( error );
     }
   }
@@ -96,6 +106,8 @@ const NotesState = ( props ) => {
       dispatch( { type: types.LOADING, payload: false } );
     } catch ( error ) {
       dispatch( { type: types.LOADING, payload: false } );
+      dispatch( { type: types.ERROR, payload: error.response.data.errors } );
+
       console.error( error );
     }
   }
@@ -110,6 +122,8 @@ const NotesState = ( props ) => {
       dispatch( { type: types.LOADING, payload: false } );
     } catch ( error ) {
       dispatch( { type: types.LOADING, payload: false } );
+      dispatch( { type: types.ERROR, payload: error.response.data.errors } );
+
       console.error( error );
     }
   }
@@ -128,7 +142,8 @@ const NotesState = ( props ) => {
         updateNote,
         getAllNotesAdmin,
         searchNotesAdmin,
-        clearNotes
+        clearNotes,
+        errors: state.errors
       }}
     >
       {props.children}

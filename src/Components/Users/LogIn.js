@@ -1,20 +1,11 @@
 import React, { useState, useContext } from 'react'
-import { Modal, Button, Form } from 'react-bootstrap';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import UserContext from "../../Context/User/UserContext";
 import { PersonSquare } from 'react-bootstrap-icons';
-
+import ModalLogin from './ModalLogin'
 export default function LogIn() {
-  const { login } = useContext( UserContext );
-  const navigate = useNavigate();
+  const { login, errors, loading } = useContext( UserContext );
   const [ show, setShow ] = useState( false );
-  const [ inputs, setInputs ] = useState( {} );
-
-  const handleChange = ( event ) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs( values => ( { ...values, [ name ]: value } ) )
-  }
 
   const handleClose = () => setShow( false );
   const handleShow = ( event ) => {
@@ -22,64 +13,17 @@ export default function LogIn() {
     setShow( true )
   };
 
-  const logIn = () => {
-    login( inputs )
-    handleClose()
-    //navigate( "/notes" )
+  const handleLogin = async ( inputs ) => {
+    await login( inputs )
   }
 
-  const handleKeypress = e => {
-    //it triggers by pressing the enter key
-    if ( e.key === 'Enter' ) {
-      e.preventDefault()
-      logIn()
-    }
-  };
   return (
     <>
       <Link className='nav-link text-white' to='#!' onClick={( event ) => {
         handleShow( event )
       }}><PersonSquare size="1.2rem" /> LogIn</Link>
 
-      <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Log in user</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="login-email">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="name@example.com"
-                name='email'
-                value={inputs.email || ''}
-                onChange={handleChange}
-                onKeyPress={( e ) => handleKeypress( e )}
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="login-password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                name='password'
-                value={inputs.password || ''}
-                onChange={handleChange}
-                onKeyPress={( e ) => handleKeypress( e )}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={logIn}>
-            Login
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <ModalLogin loading={loading} handleClose={handleClose} handleLogin={handleLogin} show={show} errors={errors} />
     </>
   );
 
