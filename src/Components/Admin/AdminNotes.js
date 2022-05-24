@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Form, FormControl, Button } from 'react-bootstrap';
-import NotesContext from "../../Context/Notes/NotesContext";
+import NotesContext from "../../Context/NotesContext";
 
 import AllNotes from './AllNotes';
 

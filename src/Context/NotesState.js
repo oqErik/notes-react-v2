@@ -10,7 +10,10 @@ const types = {
   GET_NOTES_ADMIN: "GET_NOTES_ADMIN",
   LOADING: "LOADING",
   CLEAR_NOTES: "CLEAR_NOTES",
-  ERRORS: "ERROS"
+  ERRORS: "ERRORS",
+  //USERS//
+  LOGIN: "LOGIN",
+  LOGOUT: "LOGOUT",
 }
 const token = { 'token': localStorage.getItem( 'token' ) }
 
@@ -19,12 +22,43 @@ const NotesState = ( props ) => {
     notes: [],
     selectedNote: null,
     allNotes: [],
-    loading: true,
-    errors: []
+    loading: false,
+    errors: [],
+    //USERS//
+    token: localStorage.getItem( 'token' ),
+    isAdmin: localStorage.getItem( 'isAdmin' ),
   };
 
   const [ state, dispatch ] = useReducer( NotesReducer, initialState );
+  const login = async ( { email, password } ) => {
+    try {
+      dispatch( { type: types.LOADING, payload: true } );
 
+      const res = await axios.post( 'https://notes-rest-api-v1.herokuapp.com/api/auth/login', { email, password } )
+      const token = res.data.token
+      const isAdmin = res.data.usuario.admin === true ? true : false
+      localStorage.setItem( 'token', res.data.token )
+      localStorage.setItem( 'isAdmin', res.data.usuario.admin )
+      dispatch( { type: types.LOGIN, payload: { token, isAdmin } } );
+      dispatch( { type: types.LOADING, payload: false } );
+
+      // await getNotes()
+    } catch ( error ) {
+      console.error( error );
+      dispatch( { type: types.LOADING, payload: false } );
+
+      dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
+
+    }
+  };
+
+  const logout = () => {
+    localStorage.clear()
+    dispatch( { type: types.LOGOUT, payload: null } );
+  }
+
+
+  // NOTES //
   const clearNotes = () => {
     dispatch( { type: types.CLEAR_NOTES, payload: null } );
   }
@@ -37,7 +71,7 @@ const NotesState = ( props ) => {
       dispatch( { type: types.LOADING, payload: false } );
     } catch ( error ) {
       dispatch( { type: types.LOADING, payload: false } );
-      dispatch( { type: types.ERROR, payload: error.response.data.errors } );
+      dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
 
       console.error( error );
     }
@@ -48,7 +82,7 @@ const NotesState = ( props ) => {
     try {
       dispatch( { type: types.SELECT_NOTE, payload: note } );
     } catch ( error ) {
-      dispatch( { type: types.ERROR, payload: error.response.data.errors } );
+      dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
 
       console.error( error );
     }
@@ -62,7 +96,7 @@ const NotesState = ( props ) => {
       )
       getNotes()
     } catch ( error ) {
-      dispatch( { type: types.ERROR, payload: error.response.data.errors } );
+      dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
 
       console.error( error );
     }
@@ -74,7 +108,7 @@ const NotesState = ( props ) => {
       getNotes()
       selectNote( null )
     } catch ( error ) {
-      dispatch( { type: types.ERROR, payload: error.response.data.errors } );
+      dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
 
       console.error( error );
     }
@@ -89,7 +123,7 @@ const NotesState = ( props ) => {
       getNotes()
       selectNote( null ) //refreseshes the content component
     } catch ( error ) {
-      dispatch( { type: types.ERROR, payload: error.response.data.errors } );
+      dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
 
       console.error( error );
     }
@@ -106,7 +140,7 @@ const NotesState = ( props ) => {
       dispatch( { type: types.LOADING, payload: false } );
     } catch ( error ) {
       dispatch( { type: types.LOADING, payload: false } );
-      dispatch( { type: types.ERROR, payload: error.response.data.errors } );
+      dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
 
       console.error( error );
     }
@@ -122,7 +156,7 @@ const NotesState = ( props ) => {
       dispatch( { type: types.LOADING, payload: false } );
     } catch ( error ) {
       dispatch( { type: types.LOADING, payload: false } );
-      dispatch( { type: types.ERROR, payload: error.response.data.errors } );
+      dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
 
       console.error( error );
     }
@@ -135,6 +169,7 @@ const NotesState = ( props ) => {
         selectedNote: state.selectedNote,
         allNotes: state.allNotes,
         loading: state.loading,
+        errors: state.errors,
         getNotes,
         selectNote,
         saveNewNote,
@@ -143,7 +178,12 @@ const NotesState = ( props ) => {
         getAllNotesAdmin,
         searchNotesAdmin,
         clearNotes,
-        errors: state.errors
+        // USERS // 
+        login,
+        logout,
+        token: state.token,
+        isAdmin: state.isAdmin,
+
       }}
     >
       {props.children}

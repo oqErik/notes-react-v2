@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import NotesContext from '../../Context/Notes/NotesContext'
+import NotesContext from '../../Context/NotesContext'
 import New from './New'
 import Delete from './Delete'
 import Edit from './Edit'

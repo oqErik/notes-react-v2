@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom';
-import UserContext from "../../Context/User/UserContext";
+import NotesContext from "../../Context/NotesContext";
 import { PersonSquare } from 'react-bootstrap-icons';
 import ModalLogin from './ModalLogin'
 export default function LogIn() {
-  const { login, errors, loading } = useContext( UserContext );
+  const { login, errors, loading } = useContext( NotesContext );
   const [ show, setShow ] = useState( false );
 
   const handleClose = () => setShow( false );

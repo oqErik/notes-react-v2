@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 
 import { Navbar as NavbarBoostrap, Container, Nav, NavDropdown } from 'react-bootstrap';
 import { CardHeading, BookmarkStarFill } from 'react-bootstrap-icons';
-import UserContext from "../Context/User/UserContext";
+import NotesContext from "../Context/NotesContext";
 
 
 import LogIn from './Users/LogIn';
 import Logout from './Users/Logout';
 
 export default function Navbar() {
-  const { token, isAdmin } = useContext( UserContext );
+  const { token, isAdmin } = useContext( NotesContext );
 
   const adminSection = (
     <NavDropdown

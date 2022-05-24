@@ -3,8 +3,11 @@ const types = {
   SELECT_NOTE: "SELECT_NOTE",
   GET_NOTES_ADMIN: "GET_NOTES_ADMIN",
   LOADING: "LOADING",
+  ERRORS: "ERRORS",
   CLEAR_NOTES: "CLEAR_NOTES",
-  ERRORS: "ERROS"
+  //USERS//
+  LOGIN: "LOGIN",
+  LOGOUT: "LOGOUT",
 }
 
 // eslint-disable-next-line
@@ -46,6 +49,21 @@ export default ( state, action ) => {
         ...state,
         errors: payload
       };
+    case types.LOGIN:
+      return {
+        token: payload.token,
+        isAdmin: payload.isAdmin,
+      };
+    // USERS //
+    case types.LOGOUT:
+      return {
+        token: null,
+        isAdmin: null,
+        errors: [],
+        loading: false
+      };
+
+
 
     default:
       return state;

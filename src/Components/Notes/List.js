@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import NotesContext from '../../Context/Notes/NotesContext'
+import NotesContext from '../../Context/NotesContext'
 import { Button, Spinner } from 'react-bootstrap';
 
 

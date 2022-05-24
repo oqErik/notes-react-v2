@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 import Notes from "./Components/Notes/Notes";
-import NotesState from './Context/Notes/NotesState'
-import UserState from './Context/User/UserState'
+import NotesState from './Context/NotesState'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Users from './Components/Users/Users';
@@ -18,20 +17,18 @@ root.render(
   <BrowserRouter>
     <React.StrictMode>
       <NotesState>
-        <UserState>
-          <Routes>
-            <Route path="/" element={<App />}>
-              <Route path="/" element={<Home />} />
-              <Route path="notes" element={<Notes />} />
-              <Route path="login" element={<Users />} />
-              <Route path="admin">
-                <Route path="users" element={<AdminUsers />} />
-                <Route path="notes" element={<AdminNotes />} />
-              </Route>
-              <Route path="*" element={<NoRoute />} />
-            </Route >
-          </Routes>
-        </UserState>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route path="/" element={<Home />} />
+            <Route path="notes" element={<Notes />} />
+            <Route path="login" element={<Users />} />
+            <Route path="admin">
+              <Route path="users" element={<AdminUsers />} />
+              <Route path="notes" element={<AdminNotes />} />
+            </Route>
+            <Route path="*" element={<NoRoute />} />
+          </Route >
+        </Routes>
       </NotesState>
     </React.StrictMode>
   </BrowserRouter >
