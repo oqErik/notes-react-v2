@@ -4,7 +4,6 @@ const types = {
   GET_NOTES_ADMIN: "GET_NOTES_ADMIN",
   LOADING: "LOADING",
   ERRORS: "ERRORS",
-  CLEAR_NOTES: "CLEAR_NOTES",
   //USERS//
   LOGIN: "LOGIN",
   LOGOUT: "LOGOUT",
@@ -37,13 +36,6 @@ export default ( state, action ) => {
         ...state,
         loading: payload,
       };
-    case types.CLEAR_NOTES:
-      return {
-        notes: [],
-        selectedNote: null,
-        allNotes: [],
-        loading: true
-      };
     case types.ERRORS:
       return {
         ...state,
@@ -57,6 +49,9 @@ export default ( state, action ) => {
     // USERS //
     case types.LOGOUT:
       return {
+        notes: [],
+        selectedNote: null,
+        allNotes: [],
         token: null,
         isAdmin: null,
         errors: [],

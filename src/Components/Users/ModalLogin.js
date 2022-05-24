@@ -67,7 +67,7 @@ export default function ModalLogin( { errors, show, handleLogin, handleClose, lo
 
 
 
-        {errors.length > 0 && !loading ? errors.map( ( item, pos ) => {
+        {errors?.length > 0 && !loading ? errors.map( ( item, pos ) => {
           return ( <Alert key={pos} variant="danger">
             {item.msg}
           </Alert> )

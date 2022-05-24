@@ -28,7 +28,7 @@ export default function List() {
   return ( loading ? spinner :
     <div className="list-group overflow-auto" style={{ height: "80vh" }}>
       <div className="list-group-item disabled list-group-item-action text-truncate  " style={{ minHeight: "2.5rem " }}  > Notes :</div>
-      {notes.length ?
+      {notes?.length ?
         notes.map( ( item ) => {
           return (
             <a onClick={( event ) => hadleClick( event, item )}

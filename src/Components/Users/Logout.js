@@ -8,7 +8,7 @@ import NotesContext from "../../Context/NotesContext";
 
 export default function Logout() {
   const navigate = useNavigate();
-  const { clearNotes, logout } = useContext( NotesContext );
+  const { logout } = useContext( NotesContext );
   const [ show, setShow ] = useState( false );
 
   const handleClose = () => setShow( false );
@@ -19,7 +19,6 @@ export default function Logout() {
 
   const handleLogut = () => {
     logout()
-    clearNotes()
     handleClose()
     navigate( "/" )
   };

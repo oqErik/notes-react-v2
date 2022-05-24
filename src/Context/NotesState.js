@@ -41,12 +41,10 @@ const NotesState = ( props ) => {
       localStorage.setItem( 'isAdmin', res.data.usuario.admin )
       dispatch( { type: types.LOGIN, payload: { token, isAdmin } } );
       dispatch( { type: types.LOADING, payload: false } );
-
       // await getNotes()
     } catch ( error ) {
       console.error( error );
       dispatch( { type: types.LOADING, payload: false } );
-
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
 
     }
@@ -59,9 +57,7 @@ const NotesState = ( props ) => {
 
 
   // NOTES //
-  const clearNotes = () => {
-    dispatch( { type: types.CLEAR_NOTES, payload: null } );
-  }
+
 
   const getNotes = async () => {
     try {
@@ -177,7 +173,6 @@ const NotesState = ( props ) => {
         updateNote,
         getAllNotesAdmin,
         searchNotesAdmin,
-        clearNotes,
         // USERS // 
         login,
         logout,
