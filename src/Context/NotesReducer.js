@@ -43,6 +43,7 @@ export default ( state, action ) => {
       };
     case types.LOGIN:
       return {
+        ...state,
         token: payload.token,
         isAdmin: payload.isAdmin,
       };

@@ -6,10 +6,8 @@ import Buttons from './Buttons'
 
 export default function Notes() {
   return (
-
     <div className="container-fluid">
       <h2 className="text-center">My Notes</h2>
-
       <div className="row">
         <div className="col-md-2 pb-4">
           <List />

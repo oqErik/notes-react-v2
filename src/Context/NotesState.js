@@ -15,7 +15,8 @@ const types = {
   LOGIN: "LOGIN",
   LOGOUT: "LOGOUT",
 }
-const token = { 'token': localStorage.getItem( 'token' ) }
+
+const getToken = () => ( { 'token': localStorage.getItem( 'token' ) } )
 
 const NotesState = ( props ) => {
   const initialState = {
@@ -30,10 +31,10 @@ const NotesState = ( props ) => {
   };
 
   const [ state, dispatch ] = useReducer( NotesReducer, initialState );
+
   const login = async ( { email, password } ) => {
     try {
       dispatch( { type: types.LOADING, payload: true } );
-
       const res = await axios.post( 'https://notes-rest-api-v1.herokuapp.com/api/auth/login', { email, password } )
       const token = res.data.token
       const isAdmin = res.data.usuario.admin === true ? true : false
@@ -46,7 +47,6 @@ const NotesState = ( props ) => {
       console.error( error );
       dispatch( { type: types.LOADING, payload: false } );
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
-
     }
   };
 
@@ -62,13 +62,13 @@ const NotesState = ( props ) => {
   const getNotes = async () => {
     try {
       dispatch( { type: types.LOADING, payload: true } );
-      const res = await axios.get( 'https://notes-rest-api-v1.herokuapp.com/api/notes', { headers: token } )
+      const res = await axios.get( 'https://notes-rest-api-v1.herokuapp.com/api/notes', { headers: getToken() } )
       dispatch( { type: types.GET_NOTES, payload: res.data } );
+      // localStorage.setItem( 'notes', JSON.stringify( res.data ) )
       dispatch( { type: types.LOADING, payload: false } );
     } catch ( error ) {
       dispatch( { type: types.LOADING, payload: false } );
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
-
       console.error( error );
     }
   };
@@ -79,7 +79,6 @@ const NotesState = ( props ) => {
       dispatch( { type: types.SELECT_NOTE, payload: note } );
     } catch ( error ) {
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
-
       console.error( error );
     }
   };
@@ -88,19 +87,18 @@ const NotesState = ( props ) => {
     try {
       await axios.post( `https://notes-rest-api-v1.herokuapp.com/api/notes`,
         newNote,
-        { headers: token }
+        { headers: getToken() }
       )
-      getNotes()
+      getNotes() // to refresh check this one
     } catch ( error ) {
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
-
       console.error( error );
     }
   }
 
   const deleteNote = async ( id ) => {
     try {
-      await axios.delete( `https://notes-rest-api-v1.herokuapp.com/api/notes/${id}`, { headers: token } )
+      await axios.delete( `https://notes-rest-api-v1.herokuapp.com/api/notes/${id}`, { headers: getToken() } )
       getNotes()
       selectNote( null )
     } catch ( error ) {
@@ -114,7 +112,7 @@ const NotesState = ( props ) => {
     try {
       await axios.put( `https://notes-rest-api-v1.herokuapp.com/api/notes/${_id}`,
         { title, description },
-        { headers: token }
+        { headers: getToken() }
       )
       getNotes()
       selectNote( null ) //refreseshes the content component
@@ -130,7 +128,7 @@ const NotesState = ( props ) => {
     try {
       dispatch( { type: types.LOADING, payload: true } );
       const res = await axios.get( `https://notes-rest-api-v1.herokuapp.com/api/search/notes`,
-        { headers: token }
+        { headers: getToken() }
       )
       dispatch( { type: types.GET_NOTES_ADMIN, payload: res.data } );
       dispatch( { type: types.LOADING, payload: false } );
@@ -146,7 +144,7 @@ const NotesState = ( props ) => {
     try {
       dispatch( { type: types.LOADING, payload: true } );
       const res = await axios.get( `https://notes-rest-api-v1.herokuapp.com/api/search/notes/${params}`,
-        { headers: token }
+        { headers: getToken() }
       )
       dispatch( { type: types.GET_NOTES_ADMIN, payload: res.data } );
       dispatch( { type: types.LOADING, payload: false } );

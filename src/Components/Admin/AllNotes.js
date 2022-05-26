@@ -14,7 +14,7 @@ export default function AllNotes( { allNotes, loading } ) {
       Loading...
     </Button>
 
-  const notesList = <><h4>Total: {allNotes.total}</h4>
+  const notesList = <><h4>Total: {allNotes.total ? allNotes.total : '0'}</h4>
     <Accordion>
       {allNotes.notes?.length ?
         allNotes.notes.map( ( item, pos ) => {
