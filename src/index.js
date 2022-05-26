@@ -11,8 +11,13 @@ import AdminNotes from './Components/Admin/AdminNotes';
 import AdminUsers from './Components/Admin/AdminUsers';
 import Home from './Components/Home/Home';
 import NoRoute from './Components/NoRoute';
+import ProtectedRoute from './Components/ProtectedRoute'
+
 import './index.css'
+
 const root = ReactDOM.createRoot( document.getElementById( 'root' ) );
+
+
 root.render(
   <BrowserRouter>
     <React.StrictMode>
@@ -20,11 +25,12 @@ root.render(
         <Routes>
           <Route path="/" element={<App />}>
             <Route path="/" element={<Home />} />
-            <Route path="notes" element={<Notes />} />
+            <Route path="notes" element={<ProtectedRoute><Notes /></ProtectedRoute>} />
             <Route path="login" element={<Users />} />
             <Route path="admin">
-              <Route path="users" element={<AdminUsers />} />
-              <Route path="notes" element={<AdminNotes />} />
+              <Route path="" element={<NoRoute />} />
+              <Route path="users" element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
+              <Route path="notes" element={<ProtectedRoute><AdminNotes /></ProtectedRoute>} />
             </Route>
             <Route path="*" element={<NoRoute />} />
           </Route >
