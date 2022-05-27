@@ -1,9 +1,11 @@
 import React, { useState, useContext } from 'react'
 import NotesContext from "../../Context/NotesContext";
 import { Modal, Button, Form } from 'react-bootstrap';
+import ErrorsAlert from '../ErrorsAlert'
+import Spinner from '../../Components/Spinner'
 
 export default function New() {
-  const { saveNewNote } = useContext( NotesContext );
+  const { saveNewNote, loading, errors } = useContext( NotesContext );
   const [ show, setShow ] = useState( false );
   const [ inputs, setInputs ] = useState( {} );
 
@@ -16,11 +18,14 @@ export default function New() {
   const handleClose = () => setShow( false );
   const handleShow = () => setShow( true );
 
-  const handleSave = () => {
-    saveNewNote( inputs )
-    handleClose()
+  const handleSave = async () => {
+    await saveNewNote( inputs )
+    console.log( errors );
+    if ( errors?.length < 1 ) {
+      setInputs( {} )
+      //handleClose()
+    }
   };
-
 
   return (
     <>
@@ -40,6 +45,7 @@ export default function New() {
                 placeholder="Title"
                 autoFocus
                 onChange={handleChange}
+                required
               />
             </Form.Group>
             <Form.Group
@@ -53,9 +59,16 @@ export default function New() {
                 rows={4}
                 placeholder="Description"
                 onChange={handleChange}
+                required
               />
             </Form.Group>
           </Form>
+          <div className='d-flex justify-content-center'>
+            {loading && <Spinner />}
+          </div>
+
+          <ErrorsAlert errors={errors} loading={loading} />
+
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

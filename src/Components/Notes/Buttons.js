@@ -10,14 +10,10 @@ export default function Buttons() {
   return (
     <>
       <New />
+
       {selectedNote && <Edit />}
 
       {selectedNote && <Delete />}
-
-
-      {/* <button type="button" className="btn btn-secondary btn-lg container-fluid  m-1" onClick={() => editNote()}>Edit Note</button> */}
-
-
 
     </>
   )

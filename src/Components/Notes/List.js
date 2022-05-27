@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, } from 'react'
 import NotesContext from '../../Context/NotesContext'
-import { Button, Spinner } from 'react-bootstrap';
+import Spinner from '../../Components/Spinner'
 
 export default function List() {
   const { selectNote, notes, getNotes, loading } = useContext( NotesContext );
@@ -15,19 +15,7 @@ export default function List() {
     selectNote( item )
   }
 
-  const spinner =
-    <Button variant="primary" disabled>
-      <Spinner
-        as="span"
-        animation="border"
-        size="xl"
-        role="status"
-        aria-hidden="true"
-      />
-      Loading...
-    </Button>
-
-  return ( loading ? spinner :
+  return ( loading ? <Spinner /> :
     <div className="list-group overflow-auto" style={{ height: "80vh" }}>
       <div className="list-group-item disabled list-group-item-action text-truncate  " style={{ minHeight: "2.5rem " }}  > Notes :</div>
       {notes?.length ?

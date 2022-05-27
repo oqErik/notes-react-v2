@@ -1,5 +1,7 @@
-import { Modal, Button, Form, Alert, Spinner } from 'react-bootstrap';
+import { Modal, Button, Form, } from 'react-bootstrap';
 import React, { useState } from 'react'
+import ErrorsAlert from '../../Components/ErrorsAlert';
+import Spinner from '../../Components/Spinner'
 
 export default function ModalLogin( { errors, show, handleLogin, handleClose, loading } ) {
   const [ inputs, setInputs ] = useState( {} );
@@ -17,21 +19,9 @@ export default function ModalLogin( { errors, show, handleLogin, handleClose, lo
     }
   }
 
-  const spinner =
-    <Button variant="primary" disabled>
-      <Spinner
-        as="span"
-        animation="border"
-        size="sm"
-        role="status"
-        aria-hidden="true"
-      />
-      Loading...
-    </Button>
-
 
   return (
-    <>  <Modal show={show} onHide={handleClose} centered>
+    <Modal show={show} onHide={handleClose} centered>
       <Modal.Header closeButton>
         <Modal.Title>Log in user</Modal.Title>
       </Modal.Header>
@@ -62,18 +52,13 @@ export default function ModalLogin( { errors, show, handleLogin, handleClose, lo
             />
           </Form.Group>
         </Form>
+        <div className='d-flex justify-content-center'>
+          {loading && <Spinner />}
+        </div>
 
-        <div className='d-flex justify-content-center'>  {loading && spinner}</div>
+        <ErrorsAlert errors={errors} loading={loading} />
 
-
-
-        {errors?.length > 0 && !loading ? errors.map( ( item, pos ) => {
-          return ( <Alert key={pos} variant="danger">
-            {item.msg}
-          </Alert> )
-        } ) : null}
       </Modal.Body>
-
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Close
@@ -82,7 +67,7 @@ export default function ModalLogin( { errors, show, handleLogin, handleClose, lo
           Login
         </Button>
       </Modal.Footer>
-    </Modal></>
+    </Modal>
 
   )
 }

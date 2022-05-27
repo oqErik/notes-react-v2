@@ -85,12 +85,16 @@ const NotesState = ( props ) => {
 
   const saveNewNote = async ( newNote ) => {
     try {
+      dispatch( { type: types.LOADING, payload: true } );
       await axios.post( `https://notes-rest-api-v1.herokuapp.com/api/notes`,
         newNote,
         { headers: getToken() }
       )
       getNotes() // to refresh check this one
+      dispatch( { type: types.LOADING, payload: false } );
+      dispatch( { type: types.ERRORS, payload: null } );
     } catch ( error ) {
+      dispatch( { type: types.LOADING, payload: false } );
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
       console.error( error );
     }
