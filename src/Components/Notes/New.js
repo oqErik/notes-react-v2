@@ -28,7 +28,7 @@ export default function New() {
 
   return (
     <>
-      <button onClick={handleShow} type="button" className="container-fluid btn btn-success btn-lg m-1">New Note</button>
+      <button onClick={handleShow} type="button" className="container-fluid btn btn-success btn-lg m-1">New</button>
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton >

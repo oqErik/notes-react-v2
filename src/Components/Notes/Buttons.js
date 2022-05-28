@@ -11,7 +11,7 @@ export default function Buttons() {
     <>
       <New />
 
-      {selectedNote && <Edit />}
+      {selectedNote && <Edit editingFromAdmin={false} />}
 
       {selectedNote && <Delete deletingFromAdmin={false} />}
 

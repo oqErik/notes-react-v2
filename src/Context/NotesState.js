@@ -123,8 +123,7 @@ const NotesState = ( props ) => {
         { title, description },
         { headers: getToken() }
       )
-      getNotes()
-      selectNote( null ) //refreseshes the content component
+      selectNote( null )
       return []
     } catch ( error ) {
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
@@ -166,22 +165,7 @@ const NotesState = ( props ) => {
     }
   }
 
-  const deleteNoteAdmin = async ( id ) => {
-    try {
-      dispatch( { type: types.LOADING, payload: true } );
 
-      await axios.delete( `https://notes-rest-api-v1.herokuapp.com/api/notes/${id}`, { headers: { 'token': getToken() } } )
-      getAllNotesAdmin()
-      selectNote( null )
-      dispatch( { type: types.LOADING, payload: false } );
-
-    } catch ( error ) {
-      dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
-      dispatch( { type: types.LOADING, payload: false } );
-
-      console.error( error );
-    }
-  }
 
   return (
     <NotesContext.Provider
@@ -203,7 +187,6 @@ const NotesState = ( props ) => {
         isAdmin: state.isAdmin,
         login,
         logout,
-        deleteNoteAdmin
       }}
     >
       {props.children}

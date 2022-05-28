@@ -32,7 +32,7 @@ export default function AdminNotes() {
       onKeyPress={( e ) => handleKeypress( e )}
       onChange={event => setQuery( event.target.value )}
     />
-    <Button variant="outline-success" onClick={searchNotes}>Search</Button>
+    <Button variant="success" onClick={searchNotes}>Search</Button>
   </Form> )
 
   return (

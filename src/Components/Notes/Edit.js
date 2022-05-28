@@ -4,8 +4,8 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import ErrorsAlert from '../ErrorsAlert'
 import Spinner from '../../Components/Spinner'
 
-export default function Edit() {
-  const { updateNote, selectedNote, loading, errors } = useContext( NotesContext );
+export default function Edit( { editingFromAdmin } ) {
+  const { updateNote, selectedNote, loading, errors, getAllNotesAdmin, getNotes } = useContext( NotesContext );
   const [ show, setShow ] = useState( false );
   const [ inputs, setInputs ] = useState( {} );
 
@@ -27,12 +27,13 @@ export default function Edit() {
     if ( err?.length === 0 ) {
       setInputs( {} )
       handleClose()
+      editingFromAdmin ? await getAllNotesAdmin() : await getNotes()
     }
   };
 
   return (
     <>
-      <button onClick={handleShow} type="button" className="container-fluid btn btn-secondary btn-lg m-1">Edit</button>
+      <Button onClick={handleShow} className={editingFromAdmin ? "container-fluid m-1 btn-secondary" : "btn-secondary btn-lg container-fluid m-1"}>Edit</Button>
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
