@@ -106,12 +106,14 @@ const NotesState = ( props ) => {
 
   const deleteNote = async ( id ) => {
     try {
+      dispatch( { type: types.LOADING, payload: true } );
       await axios.delete( `https://notes-rest-api-v1.herokuapp.com/api/notes/${id}`, { headers: getToken() } )
-      getNotes()
       selectNote( null )
+      dispatch( { type: types.LOADING, payload: false } );
     } catch ( error ) {
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
       console.error( error );
+      dispatch( { type: types.LOADING, payload: false } );
     }
   }
 
@@ -166,11 +168,17 @@ const NotesState = ( props ) => {
 
   const deleteNoteAdmin = async ( id ) => {
     try {
-      await axios.delete( `https://notes-rest-api-v1.herokuapp.com/api/notes/${id}`, { headers: getToken() } )
+      dispatch( { type: types.LOADING, payload: true } );
+
+      await axios.delete( `https://notes-rest-api-v1.herokuapp.com/api/notes/${id}`, { headers: { 'token': getToken() } } )
       getAllNotesAdmin()
       selectNote( null )
+      dispatch( { type: types.LOADING, payload: false } );
+
     } catch ( error ) {
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
+      dispatch( { type: types.LOADING, payload: false } );
+
       console.error( error );
     }
   }

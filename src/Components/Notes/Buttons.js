@@ -13,7 +13,7 @@ export default function Buttons() {
 
       {selectedNote && <Edit />}
 
-      {selectedNote && <Delete />}
+      {selectedNote && <Delete deletingFromAdmin={false} />}
 
     </>
   )

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Accordion, Button, } from 'react-bootstrap';
 import Spinner from '../Spinner';
-import DeleteNote from './DeleteNote';
+import Delete from '../Notes/Delete';
 import NotesContext from '../../Context/NotesContext'
 
 export default function AllNotes( { allNotes, loading } ) {
@@ -32,7 +32,7 @@ export default function AllNotes( { allNotes, loading } ) {
                 {item.description}
                 <span className="d-flex w-100 justify-content-center ">
                   <Button className="w-100 m-1 btn-dark">Edit</Button>
-                  <DeleteNote />
+                  <Delete deletingFromAdmin={true} />
                 </span>
               </Accordion.Body>
             </Accordion.Item>
