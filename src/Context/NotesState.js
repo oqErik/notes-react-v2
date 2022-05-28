@@ -65,10 +65,13 @@ const NotesState = ( props ) => {
       const res = await axios.get( 'https://notes-rest-api-v1.herokuapp.com/api/notes', { headers: getToken() } )
       dispatch( { type: types.GET_NOTES, payload: res.data } );
       dispatch( { type: types.LOADING, payload: false } );
+      dispatch( { type: types.ERRORS, payload: [] } );
+      return []
     } catch ( error ) {
       dispatch( { type: types.LOADING, payload: false } );
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
       console.error( error );
+      return error.response.data.errors
     }
   };
 
@@ -92,10 +95,12 @@ const NotesState = ( props ) => {
       getNotes() // to refresh check this one
       dispatch( { type: types.LOADING, payload: false } );
       dispatch( { type: types.ERRORS, payload: null } );
+      return []
     } catch ( error ) {
       dispatch( { type: types.LOADING, payload: false } );
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
       console.error( error );
+      return error.response.data.errors
     }
   }
 
@@ -106,7 +111,6 @@ const NotesState = ( props ) => {
       selectNote( null )
     } catch ( error ) {
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
-
       console.error( error );
     }
   }
@@ -119,10 +123,11 @@ const NotesState = ( props ) => {
       )
       getNotes()
       selectNote( null ) //refreseshes the content component
+      return []
     } catch ( error ) {
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
-
       console.error( error );
+      return error.response.data.errors
     }
   }
 

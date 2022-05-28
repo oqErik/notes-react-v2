@@ -19,11 +19,10 @@ export default function New() {
   const handleShow = () => setShow( true );
 
   const handleSave = async () => {
-    await saveNewNote( inputs )
-    console.log( errors );
-    if ( errors?.length < 1 ) {
+    const err = await saveNewNote( inputs )
+    if ( err?.length === 0 ) {
       setInputs( {} )
-      //handleClose()
+      handleClose()
     }
   };
 

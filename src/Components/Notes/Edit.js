@@ -1,9 +1,11 @@
 import React, { useState, useContext } from 'react'
 import NotesContext from "../../Context/NotesContext";
 import { Modal, Button, Form } from 'react-bootstrap';
+import ErrorsAlert from '../ErrorsAlert'
+import Spinner from '../../Components/Spinner'
 
 export default function Edit() {
-  const { updateNote, selectedNote } = useContext( NotesContext );
+  const { updateNote, selectedNote, loading, errors } = useContext( NotesContext );
   const [ show, setShow ] = useState( false );
   const [ inputs, setInputs ] = useState( {} );
 
@@ -20,9 +22,12 @@ export default function Edit() {
     setShow( true )
   };
 
-  const handleSave = () => {
-    updateNote( inputs )
-    handleClose()
+  const handleSave = async () => {
+    const err = await updateNote( inputs )
+    if ( err?.length === 0 ) {
+      setInputs( {} )
+      handleClose()
+    }
   };
 
   return (
@@ -61,6 +66,11 @@ export default function Edit() {
               />
             </Form.Group>
           </Form>
+          <div className='d-flex justify-content-center'>
+            {loading && <Spinner />}
+          </div>
+
+          <ErrorsAlert errors={errors} loading={loading} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
