@@ -14,18 +14,18 @@ export default function AllNotes( { allNotes, loading } ) {
   }
 
   const notesList = <><h4>Total: {allNotes.total ? allNotes.total : '0'}</h4>
-    <Accordion>
+    <Accordion >
       {allNotes.notes?.length ?
         allNotes.notes.map( ( item, pos ) => {
           return (
             <Accordion.Item eventKey={pos} key={item._id} onClick={( event ) => hadleClick( event, item )}>
-              <Accordion.Header >
-                <div className="flex-column align-items-start rounded-3 text-truncate" >
-                  <div className="d-flex w-100 justify-content-between">
+              <Accordion.Header>
+                <div className='w-100 text-truncate'>
+                  <div className="d-flex justify-content-between ">
                     <h5 className="mb-1">{item.title}</h5>
-                    <strong> <small>Created: {item.createdAt.split( 'T' )[ 0 ]}</small></strong>
+                    <small className='fw-bold '>Created: {item.createdAt.split( 'T' )[ 0 ]}</small>
                   </div>
-                  <p className="mb-1 ">{item.description}</p>
+                  <div className="mb-1" >{item.description}</div>
                   <small>{item.user.name}  -  {item.user.email}</small>
                 </div>
               </Accordion.Header>

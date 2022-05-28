@@ -4,7 +4,7 @@ import { Alert } from 'react-bootstrap';
 export default function ErrorsAlert( { errors, loading } ) {
   return (
     errors?.length > 0 && !loading ?
-      <Alert variant="danger" >
+      <Alert variant="danger text-capitalize"  >
         <Alert.Heading>Oh snap! 🙀</Alert.Heading>
         <ul>
           {errors.map( ( item, pos ) => {
