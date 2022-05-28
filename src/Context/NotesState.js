@@ -42,11 +42,14 @@ const NotesState = ( props ) => {
       localStorage.setItem( 'isAdmin', res.data.usuario.admin )
       dispatch( { type: types.LOGIN, payload: { token, isAdmin } } );
       dispatch( { type: types.LOADING, payload: false } );
-      // await getNotes()
+      dispatch( { type: types.ERRORS, payload: [] } );
+      return [] // i use this return to notify errors to my component
+
     } catch ( error ) {
       console.error( error );
       dispatch( { type: types.LOADING, payload: false } );
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
+      return error.response.data.errors // i use this return to notify errors to my component
     }
   };
 
@@ -55,16 +58,12 @@ const NotesState = ( props ) => {
     dispatch( { type: types.LOGOUT, payload: null } );
   }
 
-
   // NOTES //
-
-
   const getNotes = async () => {
     try {
       dispatch( { type: types.LOADING, payload: true } );
       const res = await axios.get( 'https://notes-rest-api-v1.herokuapp.com/api/notes', { headers: getToken() } )
       dispatch( { type: types.GET_NOTES, payload: res.data } );
-      // localStorage.setItem( 'notes', JSON.stringify( res.data ) )
       dispatch( { type: types.LOADING, payload: false } );
     } catch ( error ) {
       dispatch( { type: types.LOADING, payload: false } );
@@ -176,11 +175,10 @@ const NotesState = ( props ) => {
         getAllNotesAdmin,
         searchNotesAdmin,
         // USERS // 
-        login,
-        logout,
         token: state.token,
         isAdmin: state.isAdmin,
-
+        login,
+        logout,
       }}
     >
       {props.children}

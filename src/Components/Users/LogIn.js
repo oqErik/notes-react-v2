@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import NotesContext from "../../Context/NotesContext";
 import { PersonSquare } from 'react-bootstrap-icons';
 import ModalLogin from './ModalLogin'
+
 export default function LogIn() {
   const navigate = useNavigate()
 
@@ -16,15 +17,17 @@ export default function LogIn() {
   };
 
   const handleLogin = async ( inputs ) => {
-    await login( inputs )
-    navigate( "/notes" )
+    const error = await login( inputs )
+    if ( !loading && error?.length === 0 ) navigate( "/notes" )
   }
 
   return (
     <>
-      <Link className='nav-link text-white' to='#!' onClick={( event ) => {
-        handleShow( event )
-      }}><PersonSquare size="1.2rem" /> LogIn</Link>
+      <Link className='nav-link text-white'
+        to='#!'
+        onClick={handleShow}>
+        <PersonSquare size="1.2rem" /> LogIn
+      </Link>
 
       <ModalLogin loading={loading} handleClose={handleClose} handleLogin={handleLogin} show={show} errors={errors} />
     </>

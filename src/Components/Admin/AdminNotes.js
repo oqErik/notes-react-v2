@@ -10,6 +10,7 @@ export default function AdminNotes() {
 
   useEffect( () => {
     getAllNotesAdmin();
+    // eslint-disable-next-line
   }, [] )
 
   const searchNotes = () => searchNotesAdmin( query )

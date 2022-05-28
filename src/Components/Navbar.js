@@ -11,7 +11,6 @@ import Logout from './Users/Logout';
 
 export default function Navbar() {
   const { token, isAdmin } = useContext( NotesContext );
-
   const adminSection = (
     <NavDropdown
       id="admin-dropdown"
