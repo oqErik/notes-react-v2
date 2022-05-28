@@ -1,25 +1,23 @@
-import React from 'react'
-import { Accordion, Button, Spinner } from 'react-bootstrap';
+import React, { useContext } from 'react'
+import { Accordion, Button, } from 'react-bootstrap';
+import Spinner from '../Spinner';
+import DeleteNote from './DeleteNote';
+import NotesContext from '../../Context/NotesContext'
 
 export default function AllNotes( { allNotes, loading } ) {
-  const spinner =
-    <Button variant="primary" disabled>
-      <Spinner
-        as="span"
-        animation="border"
-        size="xl"
-        role="status"
-        aria-hidden="true"
-      />
-      Loading...
-    </Button>
+  const { selectNote } = useContext( NotesContext );
+
+  const hadleClick = ( event, item ) => {
+    event.preventDefault()
+    selectNote( item )
+  }
 
   const notesList = <><h4>Total: {allNotes.total ? allNotes.total : '0'}</h4>
     <Accordion>
       {allNotes.notes?.length ?
         allNotes.notes.map( ( item, pos ) => {
           return (
-            <Accordion.Item eventKey={pos} key={item._id}>
+            <Accordion.Item eventKey={pos} key={item._id} onClick={( event ) => hadleClick( event, item )}>
               <Accordion.Header >
                 <div className="flex-column align-items-start rounded-3 text-truncate" >
                   <div className="d-flex w-100 justify-content-between">
@@ -34,7 +32,7 @@ export default function AllNotes( { allNotes, loading } ) {
                 {item.description}
                 <span className="d-flex w-100 justify-content-center ">
                   <Button className="w-100 m-1 btn-dark">Edit</Button>
-                  <Button className="w-100 m-1 btn-danger">Delete</Button>
+                  <DeleteNote />
                 </span>
               </Accordion.Body>
             </Accordion.Item>
@@ -45,7 +43,7 @@ export default function AllNotes( { allNotes, loading } ) {
 
   return (
     <>
-      {loading ? spinner : notesList}
+      {loading ? <Spinner /> : notesList}
     </>
   )
 }

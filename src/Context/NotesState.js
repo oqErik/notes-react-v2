@@ -27,7 +27,7 @@ const NotesState = ( props ) => {
     errors: [],
     //USERS//
     token: localStorage.getItem( 'token' ),
-    isAdmin: localStorage.getItem( 'isAdmin' ),
+    isAdmin: localStorage.getItem( 'isAdmin' ) === 'true' ? true : false,
   };
 
   const [ state, dispatch ] = useReducer( NotesReducer, initialState );
@@ -38,8 +38,8 @@ const NotesState = ( props ) => {
       const res = await axios.post( 'https://notes-rest-api-v1.herokuapp.com/api/auth/login', { email, password } )
       const token = res.data.token
       const isAdmin = res.data.usuario.admin === true ? true : false
-      localStorage.setItem( 'token', res.data.token )
-      localStorage.setItem( 'isAdmin', res.data.usuario.admin )
+      localStorage.setItem( 'token', token )
+      localStorage.setItem( 'isAdmin', isAdmin )
       dispatch( { type: types.LOGIN, payload: { token, isAdmin } } );
       dispatch( { type: types.LOADING, payload: false } );
       dispatch( { type: types.ERRORS, payload: [] } );
@@ -164,6 +164,17 @@ const NotesState = ( props ) => {
     }
   }
 
+  const deleteNoteAdmin = async ( id ) => {
+    try {
+      await axios.delete( `https://notes-rest-api-v1.herokuapp.com/api/notes/${id}`, { headers: getToken() } )
+      getAllNotesAdmin()
+      selectNote( null )
+    } catch ( error ) {
+      dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
+      console.error( error );
+    }
+  }
+
   return (
     <NotesContext.Provider
       value={{
@@ -184,6 +195,7 @@ const NotesState = ( props ) => {
         isAdmin: state.isAdmin,
         login,
         logout,
+        deleteNoteAdmin
       }}
     >
       {props.children}

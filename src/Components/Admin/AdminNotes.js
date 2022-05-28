@@ -15,7 +15,6 @@ export default function AdminNotes() {
 
   const searchNotes = () => searchNotesAdmin( query )
 
-
   const handleKeypress = e => {
     //it triggers by pressing the enter key
     if ( e.key === 'Enter' ) {

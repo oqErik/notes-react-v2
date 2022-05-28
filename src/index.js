@@ -14,6 +14,7 @@ import NoRoute from './Components/NoRoute';
 import ProtectedRoute from './Components/ProtectedRoute'
 
 import './index.css'
+import AdminRoute from './Components/AdminRoute';
 
 const root = ReactDOM.createRoot( document.getElementById( 'root' ) );
 
@@ -29,8 +30,8 @@ root.render(
             <Route path="login" element={<Users />} />
             <Route path="admin">
               <Route path="" element={<NoRoute />} />
-              <Route path="users" element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
-              <Route path="notes" element={<ProtectedRoute><AdminNotes /></ProtectedRoute>} />
+              <Route path="users" element={<ProtectedRoute> <AdminRoute><AdminUsers /></AdminRoute></ProtectedRoute>} />
+              <Route path="notes" element={<ProtectedRoute> <AdminRoute><AdminNotes /></AdminRoute></ProtectedRoute>} />
             </Route>
             <Route path="*" element={<NoRoute />} />
           </Route >
