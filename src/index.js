@@ -6,7 +6,6 @@ import Notes from "./Components/Notes/Notes";
 import NotesState from './Context/NotesState'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Users from './Components/Users/Users';
 import AdminNotes from './Components/Admin/AdminNotes';
 import AdminUsers from './Components/Admin/AdminUsers';
 import Home from './Components/Home/Home';
@@ -27,7 +26,6 @@ root.render(
           <Route path="/" element={<App />}>
             <Route path="/" element={<Home />} />
             <Route path="notes" element={<ProtectedRoute><Notes /></ProtectedRoute>} />
-            <Route path="login" element={<Users />} />
             <Route path="admin">
               <Route path="" element={<NoRoute />} />
               <Route path="users" element={<ProtectedRoute> <AdminRoute><AdminUsers /></AdminRoute></ProtectedRoute>} />

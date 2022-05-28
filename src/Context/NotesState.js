@@ -46,7 +46,6 @@ const NotesState = ( props ) => {
       return [] // i use this return to notify errors to my component
 
     } catch ( error ) {
-      console.error( error );
       dispatch( { type: types.LOADING, payload: false } );
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
       return error.response.data.errors // i use this return to notify errors to my component
@@ -56,6 +55,21 @@ const NotesState = ( props ) => {
   const logout = () => {
     localStorage.clear()
     dispatch( { type: types.LOGOUT, payload: null } );
+  }
+
+  const addUser = async ( user ) => {
+    try {
+      dispatch( { type: types.LOADING, payload: true } );
+      await axios.post( 'https://notes-rest-api-v1.herokuapp.com/api/users', user )
+      //make the api not to log me, instead i will log the user here
+      dispatch( { type: types.LOADING, payload: false } );
+      dispatch( { type: types.ERRORS, payload: [] } );
+      return await login( user )
+    } catch ( error ) {
+      dispatch( { type: types.LOADING, payload: false } );
+      dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
+      return error.response.data.errors
+    }
   }
 
   // NOTES //
@@ -70,7 +84,6 @@ const NotesState = ( props ) => {
     } catch ( error ) {
       dispatch( { type: types.LOADING, payload: false } );
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
-      console.error( error );
       return error.response.data.errors
     }
   };
@@ -81,7 +94,6 @@ const NotesState = ( props ) => {
       dispatch( { type: types.SELECT_NOTE, payload: note } );
     } catch ( error ) {
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
-      console.error( error );
     }
   };
 
@@ -99,7 +111,6 @@ const NotesState = ( props ) => {
     } catch ( error ) {
       dispatch( { type: types.LOADING, payload: false } );
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
-      console.error( error );
       return error.response.data.errors
     }
   }
@@ -112,7 +123,6 @@ const NotesState = ( props ) => {
       dispatch( { type: types.LOADING, payload: false } );
     } catch ( error ) {
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
-      console.error( error );
       dispatch( { type: types.LOADING, payload: false } );
     }
   }
@@ -127,7 +137,6 @@ const NotesState = ( props ) => {
       return []
     } catch ( error ) {
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
-      console.error( error );
       return error.response.data.errors
     }
   }
@@ -144,8 +153,6 @@ const NotesState = ( props ) => {
     } catch ( error ) {
       dispatch( { type: types.LOADING, payload: false } );
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
-
-      console.error( error );
     }
   }
 
@@ -160,8 +167,6 @@ const NotesState = ( props ) => {
     } catch ( error ) {
       dispatch( { type: types.LOADING, payload: false } );
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
-
-      console.error( error );
     }
   }
 
@@ -187,6 +192,7 @@ const NotesState = ( props ) => {
         isAdmin: state.isAdmin,
         login,
         logout,
+        addUser
       }}
     >
       {props.children}
