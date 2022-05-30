@@ -1,12 +1,18 @@
 const types = {
+  //NOTES//
   GET_NOTES: "GET_NOTES",
   SELECT_NOTE: "SELECT_NOTE",
   GET_NOTES_ADMIN: "GET_NOTES_ADMIN",
-  LOADING: "LOADING",
-  ERRORS: "ERRORS",
+
   //USERS//
   LOGIN: "LOGIN",
   LOGOUT: "LOGOUT",
+  SELECT_USER: "SELECT_USER",
+  GET_USERS_ADMIN: "GET_USERS_ADMIN",
+
+  //MISC//
+  LOADING: "LOADING",
+  ERRORS: "ERRORS",
 }
 
 // eslint-disable-next-line
@@ -31,6 +37,35 @@ export default ( state, action ) => {
         ...state,
         allNotes: payload,
       };
+
+    // USERS //
+    case types.LOGIN:
+      return {
+        ...state,
+        token: payload.token,
+        isAdmin: payload.isAdmin,
+      };
+    case types.LOGOUT:
+      return {
+        notes: [],
+        selectedNote: null,
+        allNotes: [],
+        token: null,
+        isAdmin: null,
+        errors: [],
+        loading: false,
+        allUsers: []
+      };
+    case types.GET_USERS_ADMIN:
+      return {
+        ...state,
+        allUsers: payload,
+      };
+    case types.SELECT_USER:
+      return {
+        ...state,
+        selectedUser: payload,
+      };
     case types.LOADING:
       return {
         ...state,
@@ -41,26 +76,6 @@ export default ( state, action ) => {
         ...state,
         errors: payload
       };
-    case types.LOGIN:
-      return {
-        ...state,
-        token: payload.token,
-        isAdmin: payload.isAdmin,
-      };
-    // USERS //
-    case types.LOGOUT:
-      return {
-        notes: [],
-        selectedNote: null,
-        allNotes: [],
-        token: null,
-        isAdmin: null,
-        errors: [],
-        loading: false
-      };
-
-
-
     default:
       return state;
   }

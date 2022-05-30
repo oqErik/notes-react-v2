@@ -46,6 +46,7 @@ export default function ModalLogin( { errors, show, handleLogin, handleClose, lo
               required
               type="password"
               name='password'
+              placeholder="•••••"
               value={inputs.password || ''}
               onChange={handleChange}
               onKeyPress={( e ) => handleKeypress( e )}

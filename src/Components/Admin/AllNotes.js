@@ -22,7 +22,7 @@ export default function AllNotes( { allNotes, loading } ) {
               <Accordion.Header>
                 <div className='w-100 text-truncate'>
                   <div className="d-flex justify-content-between ">
-                    <h5 className="mb-1">{item.title}</h5>
+                    <h5 className="mb-1 text-truncate ">{item.title}</h5>
                     <small className='fw-bold '>Created: {item.createdAt.split( 'T' )[ 0 ]}</small>
                   </div>
                   <div className="mb-1" >{item.description}</div>
@@ -30,8 +30,9 @@ export default function AllNotes( { allNotes, loading } ) {
                 </div>
               </Accordion.Header>
               <Accordion.Body >
+                <div className='fw-bold '>{item.title}</div>
                 {item.description}
-                <span className="d-flex w-100 justify-content-center ">
+                <span className="d-flex">
                   <Edit editingFromAdmin={true} />
                   <Delete deletingFromAdmin={true} />
                 </span>

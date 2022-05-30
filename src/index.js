@@ -8,12 +8,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import AdminNotes from './Components/Admin/AdminNotes';
 import AdminUsers from './Components/Admin/AdminUsers';
-import Home from './Components/Home/Home';
+import Home from './Components/Home';
 import NoRoute from './Components/NoRoute';
 import ProtectedRoute from './Components/ProtectedRoute'
 
 import './index.css'
 import AdminRoute from './Components/AdminRoute';
+import Profile from './Components/Users/Profile';
 
 const root = ReactDOM.createRoot( document.getElementById( 'root' ) );
 
@@ -26,6 +27,7 @@ root.render(
           <Route path="/" element={<App />}>
             <Route path="/" element={<Home />} />
             <Route path="notes" element={<ProtectedRoute><Notes /></ProtectedRoute>} />
+            <Route path="profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="admin">
               <Route path="" element={<NoRoute />} />
               <Route path="users" element={<ProtectedRoute> <AdminRoute><AdminUsers /></AdminRoute></ProtectedRoute>} />

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { Link } from "react-router-dom";
 
 import { Navbar as NavbarBoostrap, Container, Nav, NavDropdown } from 'react-bootstrap';
-import { CardHeading, BookmarkStarFill } from 'react-bootstrap-icons';
+import { CardHeading, PersonSquare, BookmarkStarFill } from 'react-bootstrap-icons';
 import NotesContext from "../Context/NotesContext";
 
 
@@ -13,10 +13,15 @@ import AddUser from './Users/AddUser';
 
 export default function Navbar() {
   const [ show, setShow ] = useState( false )
+  const [ showProfile, setShowProfile ] = useState( false )
 
   const handleShow = () => {
     setShow( ( show ) => !show )
   }
+  const handleShowProfile = () => {
+    setShowProfile( ( showProfile ) => !showProfile )
+  }
+
 
   const { token, isAdmin } = useContext( NotesContext );
   const adminSection = (
@@ -31,9 +36,24 @@ export default function Navbar() {
     </NavDropdown>
   )
 
+  const profileSection = (
+    <NavDropdown
+      id="profile-dropdown"
+      title={( <><span>Erik </span></> )}
+      menuVariant="dark"
+      show={showProfile}
+      onClick={handleShowProfile}
+
+      className='me-3'>
+      <Link to="/profile" className='dropdown-item'><PersonSquare /> Profile</Link>
+      <NavDropdown.Divider />
+      <Logout />
+    </NavDropdown>
+  )
+
   return (
-    <NavbarBoostrap variant="dark" bg="dark" expand="lg">
-      <Container fluid>
+    <NavbarBoostrap variant="dark" bg="dark" expand="lg ">
+      <Container >
         <NavbarBoostrap.Brand><Link className="nav-link" to="/">Notes React App</Link> </NavbarBoostrap.Brand>
         <NavbarBoostrap.Toggle />
         <NavbarBoostrap.Collapse id="main-navbar">
@@ -41,7 +61,7 @@ export default function Navbar() {
             {isAdmin && adminSection}
             {token && <Link to="/notes" className="nav-link text-white"><CardHeading /> My Notes</Link>}
             {!token && <AddUser />}
-            {!token ? <LogIn /> : <Logout />}
+            {!token ? <LogIn /> : profileSection}
           </Nav>
         </NavbarBoostrap.Collapse>
       </Container>

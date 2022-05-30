@@ -5,29 +5,39 @@ import NotesReducer from "./NotesReducer";
 import NotesContext from "./NotesContext";
 
 const types = {
+  //NOTES//
   GET_NOTES: "GET_NOTES",
   SELECT_NOTE: "SELECT_NOTE",
   GET_NOTES_ADMIN: "GET_NOTES_ADMIN",
-  LOADING: "LOADING",
-  CLEAR_NOTES: "CLEAR_NOTES",
-  ERRORS: "ERRORS",
+
   //USERS//
   LOGIN: "LOGIN",
   LOGOUT: "LOGOUT",
+  SELECT_USER: "SELECT_USER",
+  GET_USERS_ADMIN: "GET_USERS_ADMIN",
+
+  //MISC//
+  LOADING: "LOADING",
+  ERRORS: "ERRORS",
 }
 
 const getToken = () => ( { 'token': localStorage.getItem( 'token' ) } )
-
 const NotesState = ( props ) => {
   const initialState = {
+    //NOTES//
     notes: [],
     selectedNote: null,
     allNotes: [],
-    loading: false,
-    errors: [],
+
     //USERS//
+    allUsers: [],
+    selectedUser: null,
+
+    //MISC//
     token: localStorage.getItem( 'token' ),
     isAdmin: localStorage.getItem( 'isAdmin' ) === 'true' ? true : false,
+    loading: false,
+    errors: [],
   };
 
   const [ state, dispatch ] = useReducer( NotesReducer, initialState );
@@ -170,6 +180,57 @@ const NotesState = ( props ) => {
     }
   }
 
+  const getUsersAdmin = async () => {
+    try {
+      dispatch( { type: types.LOADING, payload: true } );
+      const res = await axios.get( `https://notes-rest-api-v1.herokuapp.com/api/search/users`,
+        { headers: getToken() }
+      )
+      dispatch( { type: types.GET_USERS_ADMIN, payload: res.data } );
+      dispatch( { type: types.LOADING, payload: false } );
+    } catch ( error ) {
+      dispatch( { type: types.LOADING, payload: false } );
+      dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
+    }
+  }
+
+  const searchUsersAdmin = async ( params ) => {
+    try {
+      dispatch( { type: types.LOADING, payload: true } );
+      const res = await axios.get( `https://notes-rest-api-v1.herokuapp.com/api/search/users/${params}`,
+        { headers: getToken() }
+      )
+      dispatch( { type: types.GET_USERS_ADMIN, payload: res.data } );
+      dispatch( { type: types.LOADING, payload: false } );
+    } catch ( error ) {
+      dispatch( { type: types.LOADING, payload: false } );
+      dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
+    }
+  }
+
+  const selectUser = ( user ) => {
+    try {
+      dispatch( { type: types.SELECT_USER, payload: user } );
+    } catch ( error ) {
+      dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
+    }
+  };
+
+
+  const deleteUser = async ( id ) => {
+    try {
+      dispatch( { type: types.LOADING, payload: true } );
+      await axios.delete( `https://notes-rest-api-v1.herokuapp.com/api/users/${id}`,
+        { headers: getToken() }
+      )
+      selectUser( null )
+      dispatch( { type: types.LOADING, payload: false } );
+    } catch ( error ) {
+      dispatch( { type: types.LOADING, payload: false } );
+      dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
+    }
+  };
+
 
 
   return (
@@ -188,11 +249,17 @@ const NotesState = ( props ) => {
         getAllNotesAdmin,
         searchNotesAdmin,
         // USERS // 
+        allUsers: state.allUsers,
         token: state.token,
         isAdmin: state.isAdmin,
+        selectedUser: state.selectedUser,
         login,
         logout,
-        addUser
+        addUser,
+        getUsersAdmin,
+        searchUsersAdmin,
+        deleteUser,
+        selectUser,
       }}
     >
       {props.children}

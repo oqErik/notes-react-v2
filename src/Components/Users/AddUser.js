@@ -78,6 +78,9 @@ export default function AddUser() {
                 onChange={handleChange}
                 onKeyPress={( e ) => handleKeypress( e )}
               />
+              <Form.Text className="text-muted">
+                You cannot change email ⚠️
+              </Form.Text>
             </Form.Group>
             <Form.Group className="mb-3" controlId="addUser-password">
               <Form.Label>Password</Form.Label>
@@ -85,6 +88,7 @@ export default function AddUser() {
                 required
                 type="password"
                 name='password'
+                placeholder="•••••"
                 value={inputs.password || ''}
                 onChange={handleChange}
                 onKeyPress={( e ) => handleKeypress( e )}
@@ -96,7 +100,6 @@ export default function AddUser() {
           </div>
 
           <ErrorsAlert errors={errors} loading={loading} />
-
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

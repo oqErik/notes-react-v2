@@ -26,9 +26,9 @@ export default function Logout() {
 
   return (
     <>
-      <Link className='nav-link' to='#!' onClick={( event ) => {
+      <Link className='dropdown-item' to='#!' onClick={( event ) => {
         handleShow( event )
-      }}><PersonSquare size="1.2rem" /> Logout</Link>
+      }}> Logout</Link>
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
