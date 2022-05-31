@@ -1,10 +1,7 @@
 import React, { useContext } from 'react'
 import { Accordion, } from 'react-bootstrap';
 import Spinner from '../Spinner';
-import Delete from '../Notes/Delete';
 import NotesContext from '../../Context/NotesContext'
-import Edit from '../Notes/Edit';
-import AdminUsers from './AdminUsers';
 import EditUser from '../Users/EditUser';
 import DeleteUser from '../Users/DeleteUser';
 

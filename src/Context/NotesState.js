@@ -232,8 +232,8 @@ const NotesState = ( props ) => {
     }
   };
 
-  const editUser = async ( { _id, name, password = "", img }, changePass ) => {
-    const body = changePass ? { name, password, img } : { name, img }
+  const editUser = async ( { _id, name, password = "", img, admin }, changePass ) => {
+    const body = changePass ? { name, password, img, admin } : { name, img, admin }
     try {
       dispatch( { type: types.LOADING, payload: true } );
       await axios.put( `https://notes-rest-api-v1.herokuapp.com/api/users/${_id}`, body, { headers: getToken() } )

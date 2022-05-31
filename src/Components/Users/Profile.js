@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Image } from 'react-bootstrap'
 import DeleteUser from './DeleteUser'
 import EditUser from './EditUser'
@@ -54,7 +54,7 @@ export default function Profile() {
           {main}
           <div className="d-flex">
             <EditUser profile={profile} editingFromAdmin={false} />
-            <DeleteUser deletingFromAdmin={false} />
+            <DeleteUser profile={profile} deletingFromAdmin={false} />
           </div>
         </div>
 

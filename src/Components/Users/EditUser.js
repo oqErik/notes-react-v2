@@ -5,7 +5,7 @@ import NotesContext from "../../Context/NotesContext";
 import Spinner from '../../Components/Spinner'
 
 export default function EditUser( { editingFromAdmin, profile } ) {
-  const { editUser, errors, loading } = useContext( NotesContext );
+  const { editUser, errors, loading, selectedUser, getUsersAdmin } = useContext( NotesContext );
   const [ inputs, setInputs ] = useState( { admin: false } );
   const [ show, setShow ] = useState( false );
   const [ switchPass, setSwitchPass ] = useState( false );
@@ -24,10 +24,13 @@ export default function EditUser( { editingFromAdmin, profile } ) {
     }
   }
 
-  const handleClose = () => setShow( false );
+  const handleClose = () => {
+    setShow( false )
+    editingFromAdmin ? getUsersAdmin() : setInputs( profile )
+  }
   const handleShow = () => {
     setShow( true );
-    setInputs( profile )
+    editingFromAdmin ? setInputs( selectedUser ) : setInputs( profile )
   }
 
   const handleUpdateUser = async () => {
