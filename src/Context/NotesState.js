@@ -34,6 +34,7 @@ const NotesState = ( props ) => {
     selectedUser: null,
 
     //MISC//
+    profile: JSON.parse( localStorage.getItem( 'profile' ) ),
     token: localStorage.getItem( 'token' ),
     isAdmin: localStorage.getItem( 'isAdmin' ) === 'true' ? true : false,
     loading: false,
@@ -48,8 +49,10 @@ const NotesState = ( props ) => {
       const res = await axios.post( 'https://notes-rest-api-v1.herokuapp.com/api/auth/login', { email, password } )
       const token = res.data.token
       const isAdmin = res.data.usuario.admin === true ? true : false
+      const profile = JSON.stringify( res.data.usuario )
       localStorage.setItem( 'token', token )
       localStorage.setItem( 'isAdmin', isAdmin )
+      localStorage.setItem( 'profile', profile )
       dispatch( { type: types.LOGIN, payload: { token, isAdmin } } );
       dispatch( { type: types.LOADING, payload: false } );
       dispatch( { type: types.ERRORS, payload: [] } );
@@ -151,7 +154,6 @@ const NotesState = ( props ) => {
     }
   }
 
-
   const getAllNotesAdmin = async () => {
     try {
       dispatch( { type: types.LOADING, payload: true } );
@@ -216,7 +218,6 @@ const NotesState = ( props ) => {
     }
   };
 
-
   const deleteUser = async ( id ) => {
     try {
       dispatch( { type: types.LOADING, payload: true } );
@@ -231,7 +232,20 @@ const NotesState = ( props ) => {
     }
   };
 
-
+  const editUser = async ( { _id, name, password = "", img }, changePass ) => {
+    const body = changePass ? { name, password, img } : { name, img }
+    try {
+      dispatch( { type: types.LOADING, payload: true } );
+      await axios.put( `https://notes-rest-api-v1.herokuapp.com/api/users/${_id}`, body, { headers: getToken() } )
+      dispatch( { type: types.LOADING, payload: false } );
+      dispatch( { type: types.ERRORS, payload: null } );
+    } catch ( error ) {
+      dispatch( { type: types.LOADING, payload: false } );
+      dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
+      console.log( error );
+      return error.response.data.errors
+    }
+  };
 
   return (
     <NotesContext.Provider
@@ -249,6 +263,7 @@ const NotesState = ( props ) => {
         getAllNotesAdmin,
         searchNotesAdmin,
         // USERS // 
+        profile: state.profile,
         allUsers: state.allUsers,
         token: state.token,
         isAdmin: state.isAdmin,
@@ -260,6 +275,7 @@ const NotesState = ( props ) => {
         searchUsersAdmin,
         deleteUser,
         selectUser,
+        editUser,
       }}
     >
       {props.children}

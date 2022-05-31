@@ -1,30 +1,43 @@
-import React from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Form, Image } from 'react-bootstrap'
 import DeleteUser from './DeleteUser'
 import EditUser from './EditUser'
+import axios from 'axios';
+
 export default function Profile() {
+  const [ profile, setProfile ] = useState( {} )
+  useEffect( () => {
+    const getData = async () => {
+      try {
+        const res = await axios.get( `https://notes-rest-api-v1.herokuapp.com/api/users/`,
+          { headers: { token: localStorage.getItem( 'token' ) } } )
+        setProfile( res.data )
+      } catch ( error ) {
+        console.error( error );
+      }
+    }
+    getData()
+  }, [] )
 
   const main =
     <Form>
-      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1 ">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="name@example.com" disabled />
-      </Form.Group>
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
         <Form.Label>Name</Form.Label>
-        <Form.Control type="text" placeholder="Erik Ortiz" disabled />
+        <Form.Control type="text" placeholder={profile.name} disabled />
       </Form.Group>
-      <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
-        <Form.Label>Admin</Form.Label>
-        <Form.Control type="text" placeholder="yes" disabled />
+      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1 ">
+        <Form.Label>Email</Form.Label>
+        <Form.Control type="email" placeholder={profile.email} disabled />
       </Form.Group>
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
         <Form.Label>Image URL</Form.Label>
-        <Form.Control type="text" placeholder="randomurl.com" disabled />
+        <Form.Control type="text" placeholder={profile.img} disabled />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
+        <Form.Label>Admin</Form.Label>
+        <Form.Control type="text" placeholder={profile.admin ? 'YES' : 'NO'} disabled />
       </Form.Group>
     </Form>
-
-
 
   return (
     <div className="container">
@@ -32,7 +45,7 @@ export default function Profile() {
       <div className="row">
         <div className="col-md-3 pb-4 d-flex align-items-center justify-content-center">
           <Image
-            src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2F4.bp.blogspot.com%2F-9RLGAlicic8%2FUDB3IldMGXI%2FAAAAAAAAPfo%2FHEuvmHsIZTk%2Fs1600%2FCute%2BKitten%2B7.jpg&f=1&nofb=1"
+            src={profile.img}
             className='fluid rounded ' alt=""
             width={200}
             height={200} />
@@ -40,7 +53,7 @@ export default function Profile() {
         <div className="col-md-8 pb-4">
           {main}
           <div className="d-flex">
-            <EditUser editingFromAdmin={false} />
+            <EditUser profile={profile} editingFromAdmin={false} />
             <DeleteUser deletingFromAdmin={false} />
           </div>
         </div>

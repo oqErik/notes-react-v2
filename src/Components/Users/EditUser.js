@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Modal, Button, Form, Card, } from 'react-bootstrap';
 import ErrorsAlert from '../../Components/ErrorsAlert';
+import NotesContext from "../../Context/NotesContext";
 import Spinner from '../../Components/Spinner'
-export default function EditUser( { editingFromAdmin } ) {
 
-
+export default function EditUser( { editingFromAdmin, profile } ) {
+  const { editUser, errors, loading } = useContext( NotesContext );
   const [ inputs, setInputs ] = useState( { admin: false } );
   const [ show, setShow ] = useState( false );
+  const [ switchPass, setSwitchPass ] = useState( false );
 
   const handleChange = ( event ) => {
     const name = event.target.name;
@@ -23,12 +25,18 @@ export default function EditUser( { editingFromAdmin } ) {
   }
 
   const handleClose = () => setShow( false );
-  const handleShow = () => setShow( true );
+  const handleShow = () => {
+    setShow( true );
+    setInputs( profile )
+  }
 
   const handleUpdateUser = async () => {
-    console.log( 'check data' );
-    console.log( inputs );
+    const err = await editUser( inputs, switchPass )
+    if ( !err ) handleClose()
+  }
 
+  const handleSwitch = () => {
+    setSwitchPass( ( oldVal ) => !oldVal )
   }
   return (
     <>
@@ -69,57 +77,51 @@ export default function EditUser( { editingFromAdmin } ) {
                 You cannot change email ⚠️
               </Form.Text>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="editUser-password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                required
-                type="password"
-                name='password'
-                placeholder="•••••"
-                value={inputs.password || ''}
-                onChange={handleChange}
-                onKeyPress={( e ) => handleKeypress( e )}
-              />
-            </Form.Group>
+
             <Form.Group className="mb-3 " controlId="editUser-img">
               <Form.Label>Image URL</Form.Label>
               <Form.Control
                 required
                 type="text"
-                placeholder="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.RPHpg6g4KBhrfe9u3SC59gHaEo%26pid%3DApi&f=1"
                 name='img'
                 value={inputs.img || ''}
                 onChange={handleChange}
                 onKeyPress={( e ) => handleKeypress( e )}
               />
             </Form.Group>
-
-
-            <>
-              {/* <Form.Label>Admin</Form.Label>
+            <Form.Group className="mb-3" controlId="editUser-password">
+              <Form.Switch name="passwordswitch" id="passwordswitch" label="Change Password" checked={switchPass} onChange={handleSwitch} />
+              <Form.Control
+                disabled={!switchPass ? true : false}
+                required
+                type="password"
+                name='password'
+                value={inputs.password || ''}
+                onChange={handleChange}
+                onKeyPress={( e ) => handleKeypress( e )}
+              />
+            </Form.Group>
+            {/* <Form.Label>Admin</Form.Label>
               <Card body border="danger" >
                 <Form.Group className='d-flex justify-content-between'  >
                   <Form.Label className='text-danger'>Grant this user admin perms</Form.Label>
                   <Form.Switch name="admin" id="admin" onChange={handleChange} checked={inputs.admin} />
                 </Form.Group>
               </Card> */}
-              <Form.Label>Admin</Form.Label>
-              <Card body border="danger" >
-                <Form.Label className='text-danger'>Grant this user admin perms</Form.Label>
-                <Form.Select aria-label="admin" name="admin" onChange={handleChange}                >
-                  <option value={false}>No</option>
-                  <option className='text-danger ' value={true}>Yes</option>
-                </Form.Select>
-              </Card>
-            </>
-
+            {editingFromAdmin &&
+              <><Form.Label>Admin</Form.Label>
+                <Card body border="danger" >
+                  <Form.Label className='text-danger'>Grant this user admin perms</Form.Label>
+                  <Form.Select aria-label="admin" name="admin" onChange={handleChange}                >
+                    <option value={false}>No</option>
+                    <option className='text-danger ' value={true}>Yes</option>
+                  </Form.Select>
+                </Card></>}
           </Form>
-          {/*  <div className='d-flex justify-content-center'>
+          <div className='d-flex justify-content-center'>
             {loading && <Spinner />}
           </div>
-
-          <ErrorsAlert errors={errors} loading={loading} /> */}
-
+          <ErrorsAlert errors={errors} loading={loading} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
