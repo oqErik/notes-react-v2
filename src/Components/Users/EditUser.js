@@ -127,10 +127,10 @@ export default function EditUser( { editingFromAdmin, profile } ) {
           <ErrorsAlert errors={errors} loading={loading} />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button disabled={loading} variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="success" onClick={() => handleUpdateUser( inputs )}>
+          <Button disabled={loading} variant="success" onClick={() => handleUpdateUser( inputs )}>
             Save Changes
           </Button>
         </Modal.Footer>

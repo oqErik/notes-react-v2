@@ -31,10 +31,10 @@ export default function Delete( { deletingFromAdmin } ) {
         <Modal.Body>⚠️ Are you sure you want to delete this note? </Modal.Body>
         {loading && <Spinner />}
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button disabled={loading} variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="danger" onClick={handleDelete}>
+          <Button disabled={loading} variant="danger" onClick={handleDelete}>
             Delete
           </Button>
         </Modal.Footer>

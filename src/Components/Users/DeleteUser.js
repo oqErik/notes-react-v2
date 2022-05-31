@@ -36,10 +36,10 @@ export default function DeleteUser( { deletingFromAdmin, profile } ) {
         <Modal.Body> {deletingFromAdmin ? '⚠️ Are you sure you want to delete this user?' : '⚠️ Are you sure you want to delete your account?'}</Modal.Body>
         {loading && <Spinner />}
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button disabled={loading} variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="danger" onClick={handleDelete}>
+          <Button disabled={loading} variant="danger" onClick={handleDelete}>
             Delete
           </Button>
         </Modal.Footer>

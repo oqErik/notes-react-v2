@@ -61,10 +61,10 @@ export default function ModalLogin( { errors, show, handleLogin, handleClose, lo
 
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
+        <Button disabled={loading} variant="secondary" onClick={handleClose}>
           Close
         </Button>
-        <Button variant="primary" onClick={() => handleLogin( inputs )}>
+        <Button disabled={loading} variant="primary" onClick={() => handleLogin( inputs )}>
           Login
         </Button>
       </Modal.Footer>

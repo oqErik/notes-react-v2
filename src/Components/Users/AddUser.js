@@ -102,10 +102,10 @@ export default function AddUser() {
           <ErrorsAlert errors={errors} loading={loading} />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button disabled={loading} variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleCreteUser( inputs )}>
+          <Button disabled={loading} variant="primary" onClick={() => handleCreteUser( inputs )}>
             Create Account
           </Button>
         </Modal.Footer>

@@ -74,10 +74,10 @@ export default function Edit( { editingFromAdmin } ) {
           <ErrorsAlert errors={errors} loading={loading} />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button disabled={loading} variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSave}>
+          <Button disabled={loading} variant="primary" onClick={handleSave}>
             Save Changes
           </Button>
         </Modal.Footer>
