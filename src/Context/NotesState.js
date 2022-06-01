@@ -50,11 +50,10 @@ const NotesState = ( props ) => {
       const res = await axios.post( 'https://notes-rest-api-v1.herokuapp.com/api/auth/login', { email, password } )
       const token = res.data.token
       const isAdmin = res.data.usuario.admin === true ? true : false
-      const profile = JSON.stringify( res.data.usuario )
       localStorage.setItem( 'token', token )
       localStorage.setItem( 'isAdmin', isAdmin )
-      localStorage.setItem( 'profile', profile )
       dispatch( { type: types.LOGIN, payload: { token, isAdmin } } );
+      getProfile()
       dispatch( { type: types.LOADING, payload: false } );
       dispatch( { type: types.ERRORS, payload: [] } );
       return [] // i use this return to notify errors to my component
@@ -75,7 +74,6 @@ const NotesState = ( props ) => {
     try {
       dispatch( { type: types.LOADING, payload: true } );
       await axios.post( 'https://notes-rest-api-v1.herokuapp.com/api/users', user )
-      //make the api not to log me, instead i will log the user here
       dispatch( { type: types.LOADING, payload: false } );
       dispatch( { type: types.ERRORS, payload: [] } );
       return await login( user )
@@ -256,6 +254,7 @@ const NotesState = ( props ) => {
       const res = await axios.get( `https://notes-rest-api-v1.herokuapp.com/api/users/`,
         { headers: { token: localStorage.getItem( 'token' ) } } )
       dispatch( { type: types.GET_PROFILE, payload: res.data } );
+      localStorage.setItem( 'profile', JSON.stringify( res.data ) )
       dispatch( { type: types.LOADING, payload: false } );
     } catch ( error ) {
       dispatch( { type: types.LOADING, payload: false } );

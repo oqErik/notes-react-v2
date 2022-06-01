@@ -24,10 +24,7 @@ export default function EditUser( { editingFromAdmin, profile } ) {
     }
   }
 
-  const handleClose = () => {
-    setShow( false )
-    //editingFromAdmin ? getUsersAdmin() : setInputs( profile )
-  }
+  const handleClose = () => setShow( false )
   const handleShow = () => {
     setShow( true );
     editingFromAdmin ? setInputs( selectedUser ) : setInputs( profile )
@@ -37,11 +34,9 @@ export default function EditUser( { editingFromAdmin, profile } ) {
     const err = await editUser( inputs, switchPass )
     console.log( err );
     if ( err?.length === 0 ) {
-      console.log( 'entre' );
       handleClose()
       editingFromAdmin ? getUsersAdmin() : getProfile()
     }
-    console.log( 'finished update' );
   }
 
   const handleSwitch = () => setSwitchPass( oldVal => !oldVal )

@@ -9,6 +9,7 @@ import NotesContext from "../Context/NotesContext";
 import LogIn from './Users/LogIn';
 import Logout from './Users/Logout';
 import AddUser from './Users/AddUser';
+import Spinner from './Spinner';
 
 
 export default function Navbar() {
@@ -22,8 +23,7 @@ export default function Navbar() {
     setShowProfile( ( showProfile ) => !showProfile )
   }
 
-
-  const { token, isAdmin } = useContext( NotesContext );
+  const { token, isAdmin, profile } = useContext( NotesContext );
   const adminSection = (
     <NavDropdown
       id="admin-dropdown"
@@ -39,7 +39,7 @@ export default function Navbar() {
   const profileSection = (
     <NavDropdown
       id="profile-dropdown"
-      title={( <><span>Erik </span></> )}
+      title={( <><span>{profile ? profile.name : <Spinner />}</span></> )}
       menuVariant="dark"
       show={showProfile}
       onClick={handleShowProfile}
