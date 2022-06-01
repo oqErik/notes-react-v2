@@ -22,15 +22,18 @@ export default function Profile() {
       <h2 className="text-center">My Profile</h2>
       {loading ? <Spinner /> :
         <div className="row">
-          <ImageProfile profile={profile} />
-          <MainProfile profile={profile} />
+          <div className="col-md-3 pb-4 d-flex align-items-center justify-content-center">
+            <ImageProfile profile={profile} />
+          </div>
           <div className="col-md-8 pb-4">
+            <MainProfile profile={profile} />
             <div className="d-flex">
               <EditUser profile={profile} editingFromAdmin={false} />
               <DeleteUser profile={profile} deletingFromAdmin={false} />
             </div>
           </div>
-        </div>}
+        </div>
+      }
 
     </div >
   )
