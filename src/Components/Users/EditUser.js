@@ -33,7 +33,6 @@ export default function EditUser( { editingFromAdmin, profile } ) {
 
   const handleUpdateUser = async () => {
     const err = await editUser( inputs, switchPass )
-    console.log( err );
     if ( err?.length === 0 ) {
       handleClose()
       editingFromAdmin ? getUsersAdmin() : getProfile()
@@ -115,7 +114,7 @@ export default function EditUser( { editingFromAdmin, profile } ) {
               <><Form.Label>Admin</Form.Label>
                 <Card body border="danger" >
                   <Form.Label className='text-danger'>Grant this user admin perms</Form.Label>
-                  <Form.Select aria-label="admin" name="admin" onChange={handleChange}                >
+                  <Form.Select aria-label="admin" name="admin" onChange={handleChange} value={inputs.admin}        >
                     <option value={false}>No</option>
                     <option className='text-danger ' value={true}>Yes</option>
                   </Form.Select>

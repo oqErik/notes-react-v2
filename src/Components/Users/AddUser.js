@@ -79,7 +79,7 @@ export default function AddUser() {
                 onKeyPress={( e ) => handleKeypress( e )}
               />
               <Form.Text className="text-muted">
-                You cannot change email ⚠️
+                You cannot edit your email later on ⚠️
               </Form.Text>
             </Form.Group>
             <Form.Group className="mb-3" controlId="addUser-password">
