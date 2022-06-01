@@ -15,6 +15,7 @@ const types = {
   LOGOUT: "LOGOUT",
   SELECT_USER: "SELECT_USER",
   GET_USERS_ADMIN: "GET_USERS_ADMIN",
+  GET_PROFILE: "GET_PROFILE",
 
   //MISC//
   LOADING: "LOADING",
@@ -238,14 +239,30 @@ const NotesState = ( props ) => {
       dispatch( { type: types.LOADING, payload: true } );
       await axios.put( `https://notes-rest-api-v1.herokuapp.com/api/users/${_id}`, body, { headers: getToken() } )
       dispatch( { type: types.LOADING, payload: false } );
-      dispatch( { type: types.ERRORS, payload: null } );
+      //dispatch( { type: types.GET_PROFILE, payload: res.data } );
+      dispatch( { type: types.ERRORS, payload: [] } );
+      return []
     } catch ( error ) {
       dispatch( { type: types.LOADING, payload: false } );
       dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
-      console.log( error );
+      console.error( error );
       return error.response.data.errors
     }
   };
+
+  const getProfile = async () => {
+    try {
+      dispatch( { type: types.LOADING, payload: true } );
+      const res = await axios.get( `https://notes-rest-api-v1.herokuapp.com/api/users/`,
+        { headers: { token: localStorage.getItem( 'token' ) } } )
+      dispatch( { type: types.GET_PROFILE, payload: res.data } );
+      dispatch( { type: types.LOADING, payload: false } );
+    } catch ( error ) {
+      dispatch( { type: types.LOADING, payload: false } );
+      dispatch( { type: types.ERRORS, payload: error.response.data.errors } );
+      console.error( error );
+    }
+  }
 
   return (
     <NotesContext.Provider
@@ -276,6 +293,7 @@ const NotesState = ( props ) => {
         deleteUser,
         selectUser,
         editUser,
+        getProfile,
       }}
     >
       {props.children}

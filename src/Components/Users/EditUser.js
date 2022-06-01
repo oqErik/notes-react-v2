@@ -5,7 +5,7 @@ import NotesContext from "../../Context/NotesContext";
 import Spinner from '../../Components/Spinner'
 
 export default function EditUser( { editingFromAdmin, profile } ) {
-  const { editUser, errors, loading, selectedUser, getUsersAdmin } = useContext( NotesContext );
+  const { editUser, errors, loading, selectedUser, getUsersAdmin, getProfile } = useContext( NotesContext );
   const [ inputs, setInputs ] = useState( { admin: false } );
   const [ show, setShow ] = useState( false );
   const [ switchPass, setSwitchPass ] = useState( false );
@@ -26,7 +26,7 @@ export default function EditUser( { editingFromAdmin, profile } ) {
 
   const handleClose = () => {
     setShow( false )
-    editingFromAdmin ? getUsersAdmin() : setInputs( profile )
+    //editingFromAdmin ? getUsersAdmin() : setInputs( profile )
   }
   const handleShow = () => {
     setShow( true );
@@ -35,12 +35,17 @@ export default function EditUser( { editingFromAdmin, profile } ) {
 
   const handleUpdateUser = async () => {
     const err = await editUser( inputs, switchPass )
-    if ( !err ) handleClose()
+    console.log( err );
+    if ( err?.length === 0 ) {
+      console.log( 'entre' );
+      handleClose()
+      editingFromAdmin ? getUsersAdmin() : getProfile()
+    }
+    console.log( 'finished update' );
   }
 
-  const handleSwitch = () => {
-    setSwitchPass( ( oldVal ) => !oldVal )
-  }
+  const handleSwitch = () => setSwitchPass( oldVal => !oldVal )
+
   return (
     <>
       <Button onClick={handleShow} className={editingFromAdmin ? "container-fluid m-1 btn-secondary" : "btn-secondary btn-lg container-fluid m-1"}>Edit</Button>
@@ -80,7 +85,6 @@ export default function EditUser( { editingFromAdmin, profile } ) {
                 You cannot change email ⚠️
               </Form.Text>
             </Form.Group>
-
             <Form.Group className="mb-3 " controlId="editUser-img">
               <Form.Label>Image URL</Form.Label>
               <Form.Control
@@ -130,7 +134,7 @@ export default function EditUser( { editingFromAdmin, profile } ) {
           <Button disabled={loading} variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button disabled={loading} variant="success" onClick={() => handleUpdateUser( inputs )}>
+          <Button disabled={loading} variant="success" onClick={handleUpdateUser}>
             Save Changes
           </Button>
         </Modal.Footer>

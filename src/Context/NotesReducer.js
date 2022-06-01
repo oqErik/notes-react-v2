@@ -9,6 +9,7 @@ const types = {
   LOGOUT: "LOGOUT",
   SELECT_USER: "SELECT_USER",
   GET_USERS_ADMIN: "GET_USERS_ADMIN",
+  GET_PROFILE: "GET_PROFILE",
 
   //MISC//
   LOADING: "LOADING",
@@ -54,7 +55,8 @@ export default ( state, action ) => {
         isAdmin: null,
         errors: [],
         loading: false,
-        allUsers: []
+        allUsers: [],
+        profile: null,
       };
     case types.GET_USERS_ADMIN:
       return {
@@ -75,6 +77,11 @@ export default ( state, action ) => {
       return {
         ...state,
         errors: payload
+      };
+    case types.GET_PROFILE:
+      return {
+        ...state,
+        profile: payload
       };
     default:
       return state;
