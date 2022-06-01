@@ -23,6 +23,7 @@ const types = {
 }
 
 const getToken = () => ( { 'token': localStorage.getItem( 'token' ) } )
+
 const NotesState = ( props ) => {
   const initialState = {
     //NOTES//

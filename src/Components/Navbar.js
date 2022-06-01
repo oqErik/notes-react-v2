@@ -1,16 +1,13 @@
 import React, { useContext, useState } from 'react'
 import { Link } from "react-router-dom";
-
 import { Navbar as NavbarBoostrap, Container, Nav, NavDropdown } from 'react-bootstrap';
 import { CardHeading, PersonSquare, BookmarkStarFill } from 'react-bootstrap-icons';
+
 import NotesContext from "../Context/NotesContext";
-
-
 import LogIn from './Users/LogIn';
 import Logout from './Users/Logout';
 import AddUser from './Users/AddUser';
 import Spinner from './Spinner';
-
 
 export default function Navbar() {
   const [ show, setShow ] = useState( false )

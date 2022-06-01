@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react'
+
+import NotesContext from "../../Context/NotesContext";
 import DeleteUser from './DeleteUser'
 import EditUser from './EditUser'
-import NotesContext from "../../Context/NotesContext";
 import Spinner from '../Spinner';
 import MainProfile from './MainProfile';
 import ImageProfile from './ImageProfile';
-
 
 export default function Profile() {
   const { loading, getProfile, profile } = useContext( NotesContext );
@@ -16,9 +16,7 @@ export default function Profile() {
   }, [] )
 
   return (
-
     <div className="container">
-
       <h2 className="text-center">My Profile</h2>
       {loading ? <Spinner /> :
         <div className="row">
@@ -34,7 +32,6 @@ export default function Profile() {
           </div>
         </div>
       }
-
     </div >
   )
 }

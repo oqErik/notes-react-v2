@@ -65,9 +65,7 @@ export default function New() {
           <div className='d-flex justify-content-center'>
             {loading && <Spinner />}
           </div>
-
           <ErrorsAlert errors={errors} loading={loading} />
-
         </Modal.Body>
         <Modal.Footer>
           <Button disabled={loading} variant="secondary" onClick={handleClose}>

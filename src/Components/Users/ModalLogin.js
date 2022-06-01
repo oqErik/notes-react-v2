@@ -1,5 +1,6 @@
 import { Modal, Button, Form, } from 'react-bootstrap';
 import React, { useState } from 'react'
+
 import ErrorsAlert from '../../Components/ErrorsAlert';
 import Spinner from '../../Components/Spinner'
 
@@ -18,7 +19,6 @@ export default function ModalLogin( { errors, show, handleLogin, handleClose, lo
       handleLogin( inputs )
     }
   }
-
 
   return (
     <Modal show={show} onHide={handleClose} centered>
@@ -56,9 +56,7 @@ export default function ModalLogin( { errors, show, handleLogin, handleClose, lo
         <div className='d-flex justify-content-center'>
           {loading && <Spinner />}
         </div>
-
         <ErrorsAlert errors={errors} loading={loading} />
-
       </Modal.Body>
       <Modal.Footer>
         <Button disabled={loading} variant="secondary" onClick={handleClose}>

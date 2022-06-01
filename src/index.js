@@ -2,20 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 
-import Notes from "./Components/Notes/Notes";
-import NotesState from './Context/NotesState'
 import App from './App';
+import NotesState from './Context/NotesState'
+import Home from './Components/Home';
+import Notes from "./Components/Notes/Notes";
 import AdminNotes from './Components/Admin/AdminNotes';
 import AdminUsers from './Components/Admin/AdminUsers';
-import Home from './Components/Home';
 import NoRoute from './Components/NoRoute';
 import ProtectedRoute from './Components/ProtectedRoute'
-
 import AdminRoute from './Components/AdminRoute';
 import Profile from './Components/Users/Profile';
 
 const root = ReactDOM.createRoot( document.getElementById( 'root' ) );
-
 
 root.render(
   <BrowserRouter>

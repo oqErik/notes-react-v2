@@ -10,11 +10,8 @@ export default function Buttons() {
   return (
     <>
       <New />
-
       {selectedNote && <Edit editingFromAdmin={false} />}
-
       {selectedNote && <Delete deletingFromAdmin={false} />}
-
     </>
   )
 }

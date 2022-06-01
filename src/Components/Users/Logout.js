@@ -1,10 +1,7 @@
 import React, { useState, useContext } from 'react'
-
 import { Modal, Button } from 'react-bootstrap';
 import { useNavigate, Link } from "react-router-dom";
-import { PersonSquare } from 'react-bootstrap-icons';
 import NotesContext from "../../Context/NotesContext";
-
 
 export default function Logout() {
   const navigate = useNavigate();
@@ -22,7 +19,6 @@ export default function Logout() {
     handleClose()
     navigate( "/" )
   };
-
 
   return (
     <>

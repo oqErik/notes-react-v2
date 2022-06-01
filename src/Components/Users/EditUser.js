@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Modal, Button, Form, Card, } from 'react-bootstrap';
+
 import ErrorsAlert from '../../Components/ErrorsAlert';
 import NotesContext from "../../Context/NotesContext";
 import Spinner from '../../Components/Spinner'
@@ -134,10 +135,6 @@ export default function EditUser( { editingFromAdmin, profile } ) {
           </Button>
         </Modal.Footer>
       </Modal>
-
-
-
-
     </>
   )
 }

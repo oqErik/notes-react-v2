@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import NotesContext from "../../Context/NotesContext";
 import { PersonPlus } from 'react-bootstrap-icons';
 import { Modal, Button, Form, } from 'react-bootstrap';
+
+import NotesContext from "../../Context/NotesContext";
 import ErrorsAlert from '../../Components/ErrorsAlert';
 import Spinner from '../../Components/Spinner'
-
 
 export default function AddUser() {
   const [ inputs, setInputs ] = useState( {} );
@@ -98,7 +98,6 @@ export default function AddUser() {
           <div className='d-flex justify-content-center'>
             {loading && <Spinner />}
           </div>
-
           <ErrorsAlert errors={errors} loading={loading} />
         </Modal.Body>
         <Modal.Footer>

@@ -6,7 +6,7 @@ export default function ProtectedRoute( { children } ) {
 
   const homepage = (
     <div className='d-flex align-items-center flex-column'>
-      <h1 > <ExclamationCircle className='m-2 small' /> You need to login first! </h1>
+      <h1><ExclamationCircle className='m-2 small' /> You need to login first! </h1>
       <p><Link to="/">Go back to main page</Link> </p>
     </div> )
 

@@ -1,13 +1,11 @@
 import React, { useContext } from 'react'
 import NotesContext from "../../Context/NotesContext";
 
-
 export default function Content() {
   const { selectedNote } = useContext( NotesContext );
 
   return (
     <>
-
       <div className="card" >
         <div className="card-body">
           {selectedNote && <div className="text-muted">Title:</div>}
@@ -23,10 +21,6 @@ export default function Content() {
           </p>
         </div>
       </div>
-
     </>
-
-
-
   )
 }

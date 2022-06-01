@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react'
-import NotesContext from "../../Context/NotesContext";
 import { Modal, Button } from 'react-bootstrap';
-import Spinner from '../Spinner';
 import { useNavigate } from 'react-router-dom';
+
+import NotesContext from "../../Context/NotesContext";
+import Spinner from '../Spinner';
 
 export default function DeleteUser( { deletingFromAdmin, profile } ) {
   const navigate = useNavigate()

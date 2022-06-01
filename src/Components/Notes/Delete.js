@@ -21,7 +21,6 @@ export default function Delete( { deletingFromAdmin } ) {
   //
   return (
     <>
-
       <Button onClick={handleShow} className={deletingFromAdmin ? "container-fluid m-1 btn-danger" : "btn-danger btn-lg container-fluid m-1"}>Delete</Button>
 
       <Modal show={show} onHide={handleClose} centered>

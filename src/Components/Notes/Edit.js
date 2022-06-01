@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
-import NotesContext from "../../Context/NotesContext";
 import { Modal, Button, Form } from 'react-bootstrap';
+
+import NotesContext from "../../Context/NotesContext";
 import ErrorsAlert from '../ErrorsAlert'
 import Spinner from '../../Components/Spinner'
 
@@ -70,7 +71,6 @@ export default function Edit( { editingFromAdmin } ) {
           <div className='d-flex justify-content-center'>
             {loading && <Spinner />}
           </div>
-
           <ErrorsAlert errors={errors} loading={loading} />
         </Modal.Body>
         <Modal.Footer>

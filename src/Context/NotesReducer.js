@@ -18,8 +18,6 @@ const types = {
 
 // eslint-disable-next-line
 export default ( state, action ) => {
-
-
   const { payload, type } = action;
 
   switch ( type ) {
