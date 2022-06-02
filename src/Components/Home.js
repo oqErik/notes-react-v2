@@ -55,7 +55,7 @@ export default function Home() {
           <section className="mb-4">
             <a className="btn btn-outline-light btn-floating m-1" target="_blank" href="https://www.linkedin.com/in/erik-ortiz-q/" rel="noopener noreferrer" role="button"
             ><Linkedin></Linkedin> Linkedin</a>
-            <a className="btn btn-outline-light btn-floating m-1" target="_blank" href="/oqerik@gmail.com.pdf" rel="noopener noreferrer" role="button"
+            <a className="btn btn-outline-light btn-floating m-1" target="_blank" href="/Resume.pdf" rel="noopener noreferrer" role="button"
             ><Envelope></Envelope> Download my CV</a>
             <a className="btn btn-outline-light btn-floating m-1" target="_blank" href="https://github.com/oqErik" rel="noopener noreferrer" role="button"
             ><Github></Github> GitHub</a>
