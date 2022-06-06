@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Modal, Button } from 'react-bootstrap';
+import { BoxArrowLeft } from 'react-bootstrap-icons'
 import { useNavigate, Link } from "react-router-dom";
 import NotesContext from "../../Context/NotesContext";
 
@@ -24,7 +25,7 @@ export default function Logout() {
     <>
       <Link className='dropdown-item' to='#!' onClick={( event ) => {
         handleShow( event )
-      }}> Logout</Link>
+      }}> <BoxArrowLeft></BoxArrowLeft> Logout</Link>
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>

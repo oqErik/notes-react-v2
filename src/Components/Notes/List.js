@@ -16,7 +16,7 @@ export default function List() {
   }
 
   return ( loading ? <Spinner /> :
-    <div className="list-group overflow-auto " style={{ height: "80vh" }}>
+    <div className="list-group overflow-auto ">
       <div className="list-group-item disabled list-group-item-action text-truncate  " variant="flush" style={{ minHeight: "2.5rem " }}  > Notes :</div>
       {notes?.length ?
         notes.map( ( item ) => {

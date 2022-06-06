@@ -40,8 +40,8 @@ export default function Navbar() {
       menuVariant="dark"
       show={showProfile}
       onClick={handleShowProfile}
-
       className='me-3'>
+
       <Link to="/profile" className='dropdown-item'><PersonSquare /> Profile</Link>
       <NavDropdown.Divider />
       <Logout />
