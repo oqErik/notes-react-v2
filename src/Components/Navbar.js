@@ -41,9 +41,7 @@ export default function Navbar() {
       show={showProfile}
       onClick={handleShowProfile}
       className='me-3'>
-
-      <Link to="/profile" className='dropdown-item'><PersonSquare /> Profile</Link>
-      <NavDropdown.Divider />
+      <Link to="/profile" className='dropdown-item' ><PersonSquare /> Profile</Link>
       <Logout />
     </NavDropdown>
   )

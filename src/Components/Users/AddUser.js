@@ -94,6 +94,17 @@ export default function AddUser() {
                 onKeyPress={( e ) => handleKeypress( e )}
               />
             </Form.Group>
+            <Form.Group className="mb-3" controlId="addUser-img">
+              <Form.Label>Image URL (optional)</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="https://some-random-google-img.png"
+                name='img'
+                value={inputs.img || ''}
+                onChange={handleChange}
+                onKeyPress={( e ) => handleKeypress( e )}
+              />
+            </Form.Group>
           </Form>
           <div className='d-flex justify-content-center'>
             {loading && <Spinner />}
